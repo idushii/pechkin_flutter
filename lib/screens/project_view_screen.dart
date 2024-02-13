@@ -13,16 +13,14 @@ class ProjectViewScreen extends StatelessWidget {
     final project = mockProjects.firstWhere((project) => project.id == id);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(project.name),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-             Text(project.description),
-          ]
+        appBar: AppBar(
+          title: Text(project.name),
         ),
-      )
-    );
+        body: SafeArea(
+          child: Column(children: [
+            Text(project.description),
+            Text('Тут будет список запросов, а справа - просмотр формы запроса и др.'),
+          ]),
+        ));
   }
 }
