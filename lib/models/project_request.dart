@@ -1,0 +1,142 @@
+class RequestType {
+  static const String GET = 'get';
+  static const String POST = 'post';
+  static const String PUT = 'put';
+  static const String DELETE = 'delete';
+  static const String PATCH = 'patch';
+}
+
+class ProjectRequestPayloadType {
+  static const String STRING = 'string';
+  static const String INT = 'int';
+  static const String DOUBLE = 'double';
+  static const String BOOLEAN = 'boolean';
+  static const String DATE = 'date';
+  static const String DATE_TIME = 'date_time';
+  static const String FILE = 'file';
+}
+
+class ProjectRequestPayload {
+  final String name;
+  final String description;
+  final String type;
+  final bool isArray;
+
+  ProjectRequestPayload({required this.name, required this.description, required this.type, required this.isArray});
+
+  static ProjectRequestPayload fromMap(Map<String, dynamic> json) {
+    return ProjectRequestPayload(
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      type: json['type'] ?? ProjectRequestPayloadType.STRING,
+      isArray: json['isArray'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'type': type,
+      'isArray': isArray,
+    };
+  }
+
+  static ProjectRequestPayload empty() {
+    return ProjectRequestPayload(
+      name: '',
+      description: '',
+      type: ProjectRequestPayloadType.STRING,
+      isArray: false,
+    );
+  }
+
+  static ProjectRequestPayload string(String name, String desc) {
+    return ProjectRequestPayload(
+      name: name,
+      description: desc,
+      type: ProjectRequestPayloadType.STRING,
+      isArray: false,
+    );
+  }
+  static ProjectRequestPayload int(String name, String desc) {
+    return ProjectRequestPayload(
+      name: name,
+      description: desc,
+      type: ProjectRequestPayloadType.INT,
+      isArray: false,
+    );
+  }
+  static ProjectRequestPayload double(String name, String desc) {
+    return ProjectRequestPayload(
+      name: name,
+      description: desc,
+      type: ProjectRequestPayloadType.DOUBLE,
+      isArray: false,
+    );
+  }
+  static ProjectRequestPayload boolean(String name, String desc) {
+    return ProjectRequestPayload(
+      name: name,
+      description: desc,
+      type: ProjectRequestPayloadType.BOOLEAN,
+      isArray: false,
+    );
+  }
+}
+
+class ProjectRequest {
+  final int id;
+  final int projectId;
+  final String name;
+  final String description;
+  final String type;
+  final List<ProjectRequestPayload> payload;
+  final List<ProjectRequestPayload> response;
+
+  ProjectRequest({
+    required this.id,
+    required this.projectId,
+    required this.name,
+    required this.description,
+    required this.type,
+    required this.payload,
+    required this.response,
+  });
+
+  static ProjectRequest fromMap(Map<String, dynamic> json) {
+    return ProjectRequest(
+      id: json['id'] ?? 0,
+      projectId: json['projectId'] ?? 0,
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      type: json['type'] ?? RequestType.GET,
+      payload: (json['payload'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
+      response: (json['response'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'projectId': projectId,
+      'name': name,
+      'description': description,
+      'type': type,
+      'payload': payload.map((e) => e.toMap()).toList(),
+      'response': response.map((e) => e.toMap()).toList(),
+    };
+  }
+
+  static ProjectRequest empty() {
+    return ProjectRequest(
+      id: 0,
+      projectId: 0,
+      name: '',
+      description: '',
+      type: RequestType.GET,
+      payload: [],
+      response: [],
+    );
+  }
+}
