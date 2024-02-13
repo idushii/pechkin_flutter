@@ -1,16 +1,27 @@
-# pechkin_flutter
+# Печкин (flutter)
 
-A new Flutter project.
+Приложение для документации REST и socket API.
 
-## Getting Started
+Предполагается возможность обсуждения изменений, 
+выделение отдельных веток под задачи с последующим слиянием,
+командная работа. Так же возможность выполнить запросы напрямую из документации.
 
-This project is a starting point for a Flutter application.
+Хранить документацию предполагается в репозитории git (без обсуждений) или на сервере 
+(тогда появляется возможность обсуждений)
 
-A few resources to get you started if this is your first Flutter project:
+## Технологии
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Навигация с помощью нативного роутера
+- Выполнение запросов к помощью DIO ?
+- Храненение данных с помощью shared preferences ?
+- Редактирование MD текста - ?
+- Формочки для документирования rest api ?
+- Работа с состоянием проекта - cubit ?
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Файловая структура проекта
+
+- screens - экраны
+- shared - общие компоненты
+- models - классы данных
+- api - вызов запросов api
+- state - состояние проекта (cubit)
