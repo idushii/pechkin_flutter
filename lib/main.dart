@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
-import 'package:pechkin_flutter/screens/project_view_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
 import 'package:pechkin_flutter/screens/projects_screen.dart';
 import 'package:pechkin_flutter/shared/menu.dart';
 
@@ -56,6 +56,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

@@ -15,10 +15,6 @@ class ProjectsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Проекты"),
-          leading: IconButton(
-            icon: Icon(Icons.chevron_left),
-            onPressed: () => context.pop(HomeScreen.route),
-          ),
         ),
         body: SafeArea(
             child: Column(children: [

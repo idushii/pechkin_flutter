@@ -88,6 +88,8 @@ class ProjectRequestPayload {
 class ProjectRequest {
   final int id;
   final int projectId;
+  final int groupId;
+  final String path;
   final String name;
   final String description;
   final String type;
@@ -97,6 +99,8 @@ class ProjectRequest {
   ProjectRequest({
     required this.id,
     required this.projectId,
+    required this.groupId,
+    required this.path,
     required this.name,
     required this.description,
     required this.type,
@@ -108,6 +112,8 @@ class ProjectRequest {
     return ProjectRequest(
       id: json['id'] ?? 0,
       projectId: json['projectId'] ?? 0,
+      groupId: json['groupId'] ?? 0,
+      path: json['path'] ?? '',
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       type: json['type'] ?? RequestType.GET,
@@ -120,6 +126,8 @@ class ProjectRequest {
     return {
       'id': id,
       'projectId': projectId,
+      'groupId': groupId,
+      'path': path,
       'name': name,
       'description': description,
       'type': type,
@@ -132,6 +140,8 @@ class ProjectRequest {
     return ProjectRequest(
       id: 0,
       projectId: 0,
+      groupId: 0,
+      path: '',
       name: '',
       description: '',
       type: RequestType.GET,

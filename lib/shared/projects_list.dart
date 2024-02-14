@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/models/project_item.dart';
-import 'package:pechkin_flutter/screens/project_view_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
 
 class ProjectsListItem extends StatelessWidget {
   final ProjectItem project;
