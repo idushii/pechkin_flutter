@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
 import 'package:pechkin_flutter/screens/projects_screen.dart';
 import 'package:pechkin_flutter/shared/menu.dart';
@@ -41,6 +42,13 @@ final _router = GoRouter(
                 path: ProjectViewScreen.route,
                 name: ProjectViewScreen.routeName,
                 builder: (context, state) => ProjectViewScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
+                routes: [
+                  GoRoute(
+                    path: ProjectEditScreen.route,
+                    name: ProjectEditScreen.routeName,
+                    builder: (context, state) => ProjectEditScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
+                  ),
+                ],
               ),
             ]
           ),

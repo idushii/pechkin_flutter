@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
@@ -11,7 +12,7 @@ class ProjectViewScreen extends StatelessWidget {
   final int id;
 
   static const route = ":id";
-  static const routeName = "/projects/:id";
+  static const routeName = "project_view";
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,11 @@ class ProjectViewScreen extends StatelessWidget {
           title: Text(project.name),
           actions: [
             PopupMenuButton(
-                onSelected: (value) {},
+                onSelected: (value) {
+                  if (value == 1) {
+                    context.goNamed(ProjectEditScreen.routeName, pathParameters: {'id': id.toString()});
+                  }
+                },
                 icon: const Icon(Icons.more_vert),
                 itemBuilder: (context) {
                   return [

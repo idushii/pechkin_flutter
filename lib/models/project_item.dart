@@ -21,4 +21,17 @@ class ProjectItem {
     };
   }
 
+  // empty
+  static ProjectItem empty() {
+    return ProjectItem(0, name: '', description: '');
+  }
+
+  // copyWith
+  ProjectItem copyWith({int? id, String? name, String? description}) {
+    return ProjectItem(
+      id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
+  }
 }
