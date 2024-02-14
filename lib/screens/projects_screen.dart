@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/shared/projects_list.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
@@ -13,6 +15,10 @@ class ProjectsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Проекты"),
+          leading: IconButton(
+            icon: Icon(Icons.chevron_left),
+            onPressed: () => context.pop(HomeScreen.route),
+          ),
         ),
         body: SafeArea(
             child: Column(children: [

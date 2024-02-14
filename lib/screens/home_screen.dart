@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/projects_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               title: Text("Проекты"),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.of(context).pushNamed(ProjectsScreen.route, arguments: 1);
+                context.goNamed(ProjectsScreen.route);
               }),
           ListTile(
               title: Row(children: [
@@ -36,19 +37,19 @@ class HomeScreen extends StatelessWidget {
               ]),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.of(context).pushNamed(ProjectsScreen.route, arguments: 1);
+                context.goNamed(ProjectsScreen.route);
               }),
           ListTile(
               title: Text("Обсуждения"),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.of(context).pushNamed(ProjectsScreen.route, arguments: 1);
+                context.goNamed(ProjectsScreen.route);
               }),
           ListTile(
               title: Text("Команда"),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.of(context).pushNamed(ProjectsScreen.route, arguments: 1);
+                context.goNamed(ProjectsScreen.route);
               }),
         ])));
   }
