@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
-import 'package:pechkin_flutter/shared/projects_list.dart';
+import 'package:pechkin_flutter/shared/project_list.dart';
+import 'package:pechkin_flutter/shared/projects_list_item.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
 class ProjectsScreen extends StatelessWidget {
@@ -12,19 +15,33 @@ class ProjectsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Проекты"),
+      appBar: AppBar(
+        title: const Text("Проекты"),
+      ),
+      body: SafeArea(
+        child: Row(
+          children: [
+            const Flexible(
+              flex: 1,
+              child: ProjectList(),
+            ),
+            if (w > 1000)
+              Flexible(
+                flex: 3,
+                child: Container(
+                    child: Column(
+                      children: [
+                        Text('Тут будет инфа, общая для всех проектов')
+                      ]
+                    )
+                ),
+              ),
+          ],
         ),
-        body: SafeArea(
-            child: Column(children: [
-          if (mockProjects.isEmpty) const Text("Нет проектов"),
-          Expanded(
-              child: ListView.builder(
-                  itemCount: mockProjects.length,
-                  itemBuilder: (context, index) {
-                    return ProjectsListItem(project: mockProjects[index]);
-                  }))
-        ])));
+      ),
+    );
   }
 }

@@ -3,20 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/projects_screen.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
   const Menu({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isSmallScreen = MediaQuery.of(context).size.width < 700;
+  State<Menu> createState() => _MenuState();
+}
 
+class _MenuState extends State<Menu> {
+  bool isSmallScreen = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    setState(() {
+      isSmallScreen = MediaQuery.of(context).size.width < 700 || GoRouterState.of(context).fullPath != '/';
+    });
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     if (isSmallScreen) {
       return SizedBox(
           width: 50,
           child: Column(children: [
-            const SizedBox(
-              height: 50,
-              child: Center(child: Icon(Icons.menu)),
+            IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => setState(() {
+                isSmallScreen = !isSmallScreen;
+              }),
             ),
             IconButton(
               icon: const Icon(Icons.folder_open),
@@ -40,7 +61,16 @@ class Menu extends StatelessWidget {
     return SizedBox(
       width: 270,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(height: 50, alignment: Alignment.center, child: const Text("Меню", style: TextStyle(fontSize: 20))),
+        Container(
+          height: 50,
+          alignment: Alignment.center,
+          child: GestureDetector(
+            onTap: () => setState(() {
+              isSmallScreen = !isSmallScreen;
+            }),
+            child: const Text("Меню", style: TextStyle(fontSize: 20)),
+          ),
+        ),
         ListTile(
             title: const Text("Проекты"),
             trailing: const Icon(Icons.chevron_right),

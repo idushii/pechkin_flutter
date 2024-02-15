@@ -23,18 +23,18 @@ class ProjectsListItem extends StatelessWidget {
           child: Text(project.description),
         ),
         ListTile(
-            title: Text('Запросы'),
-            trailing: Icon(Icons.chevron_right),
+            title: const Text('Запросы'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               context.goNamed(ProjectViewScreen.routeName, pathParameters: {'id': project.id.toString()});
             }),
         ListTile(
-            title: Text('Обсуждения'),
-            trailing: Icon(Icons.chevron_right),
+            title: const Text('Обсуждения'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               context.goNamed(ProjectViewScreen.routeName, pathParameters: {'id': project.id.toString()});
             }),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
       ],
     );
   }
