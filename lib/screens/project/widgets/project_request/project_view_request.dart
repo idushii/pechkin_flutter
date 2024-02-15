@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_request_title.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -60,7 +61,16 @@ class ProjectViewRequest extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 20),
+        Text('Данные для отправки', style: Theme.of(context).textTheme.titleSmall),
         SizedBox(height: 10),
+        for (var item in request.payload)
+          ProjectViewRequestPayload(payload: item),
+        SizedBox(height: 10),
+        Text('Ответ', style: Theme.of(context).textTheme.titleSmall),
+        SizedBox(height: 10),
+        for (var item in request.response)
+          ProjectViewRequestPayload(payload: item),
       ],
     );
   }

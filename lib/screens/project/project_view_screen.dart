@@ -87,11 +87,9 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                             children: [
                               Text('Переменные среды', style: Theme.of(context).textTheme.titleMedium),
                               SizedBox(height: 10),
-                              SelectableText('baseUrl: https://test.ru'),
-                              SelectableText('token: sdjkfhskdsdffahsdgfkjahsgdfjahsd'),
-                              SelectableText('isDev: true'),
+                              SelectableText('baseUrl: https://test.ru \ntoken: sdjkfhskdsdffahsdgfkjahsgdfjahsd \nisDev: true'),
                               SizedBox(height: 20),
-                              Text('Тут будет инфа, для выбранного маршрута'),
+                              SelectableText('Тут будет инфа, для выбранного маршрута'),
                             ],
                           ),
                         if (selectedRequest > 0) ProjectViewRequest(id: selectedRequest)
