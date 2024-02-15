@@ -29,14 +29,15 @@ class ProjectsScreen extends StatelessWidget {
               child: ProjectList(),
             ),
             if (w > 1000)
-              Flexible(
+              const Flexible(
                 flex: 3,
-                child: Container(
-                    child: Column(
-                      children: [
-                        Text('Тут будет инфа, общая для всех проектов')
-                      ]
-                    )
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Тут будет инфа, общая для всех проектов.'),
+                    Text('Так же тут будет список версий для проекта, если тыкнуть на кнопку "Версии"'),
+                    Text('Или обсуждения, если тыкнуть на кнопку "Обсуждения"'),
+                  ]
                 ),
               ),
           ],

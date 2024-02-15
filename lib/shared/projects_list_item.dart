@@ -29,6 +29,12 @@ class ProjectsListItem extends StatelessWidget {
               context.goNamed(ProjectViewScreen.routeName, pathParameters: {'id': project.id.toString()});
             }),
         ListTile(
+            title: const Text('Версии'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+
+            }),
+        ListTile(
             title: const Text('Обсуждения'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {

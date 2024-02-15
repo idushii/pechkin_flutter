@@ -34,7 +34,7 @@ class _ProjectGroupsListState extends State<ProjectGroupsList> {
               return [
                 const PopupMenuItem(value: 1, child: Text('Добавить запрос')),
                 const PopupMenuItem(value: 1, child: Text('Изменить')),
-                const PopupMenuItem(value: 1, child: Text('Удалить')),
+                const PopupMenuItem(value: 1, child: Text('Поделиться')),
               ];
             }
           )),

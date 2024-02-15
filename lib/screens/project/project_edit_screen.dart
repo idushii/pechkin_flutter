@@ -41,27 +41,43 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Редактирование проекта ${project.name}"),
+          actions: [
+            PopupMenuButton(
+              onSelected: (value) {
+                if (value == 1) {
+
+                }
+              },
+              icon: const Icon(Icons.more_vert),
+              itemBuilder: (context) {
+                return [
+                  const PopupMenuItem(value: 1, child: Text('Удалить')),
+                ];
+              }
+            )
+          ]
         ),
-        body: Container(
-            constraints: BoxConstraints(maxWidth: 500),
-            padding: const EdgeInsets.all(8.0),
-            child: ReactiveForm(
-              formGroup: form,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // label
-                ReactiveTextField<String>(formControlName: 'name', decoration: const InputDecoration(labelText: 'Название')),
-                ReactiveTextField<String>(formControlName: 'description', minLines: 3, maxLines: 100, decoration: const InputDecoration(labelText: 'Описание')),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (form.valid) {
-                      context.pop();
-                    }
-                  },
-                  child: const Text('Сохранить'),
-                )]),
-            )));
+        body: Center(
+          child: Container(
+              constraints: BoxConstraints(maxWidth: 500),
+              padding: const EdgeInsets.all(8.0),
+              child: ReactiveForm(
+                formGroup: form,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  // label
+                  ReactiveTextField<String>(formControlName: 'name', decoration: const InputDecoration(labelText: 'Название')),
+                  ReactiveTextField<String>(formControlName: 'description', minLines: 3, maxLines: 100, decoration: const InputDecoration(labelText: 'Описание')),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (form.valid) {
+                        context.pop();
+                      }
+                    },
+                    child: const Text('Сохранить'),
+                  ),
+                ]),
+              )),
+        ));
   }
 }

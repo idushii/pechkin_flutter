@@ -47,8 +47,16 @@ class ProjectViewScreen extends StatelessWidget {
                     ),
                     const PopupMenuItem(
                       value: 4,
-                      child: Text('Удалить'),
-                    )
+                      child: Text('Импорт'),
+                    ),
+                    const PopupMenuItem(
+                      value: 5,
+                      child: Text('Создать версию'),
+                    ),
+                    const PopupMenuItem(
+                      value: 6,
+                      child: Text('Добавить группу'),
+                    ),
                   ];
                 })
           ],
@@ -69,10 +77,10 @@ class ProjectViewScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  if (w > 500)
+                  if (w > 700)
                     Flexible(
                       flex: w > 1000 ? ( w > 1300 ? 7 : 3) : 1,
-                      child: Column(children: [
+                      child: const Column(children: [
                         Text('Тут будет инфа, для выбранного маршрута'),
                       ]),
                     ),
