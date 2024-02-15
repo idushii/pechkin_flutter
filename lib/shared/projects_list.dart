@@ -7,7 +7,7 @@ import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
 class ProjectsListItem extends StatelessWidget {
   final ProjectItem project;
 
-  ProjectsListItem({super.key, required this.project});
+  const ProjectsListItem({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {

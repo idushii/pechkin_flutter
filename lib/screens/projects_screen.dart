@@ -14,11 +14,11 @@ class ProjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Проекты"),
+          title: const Text("Проекты"),
         ),
         body: SafeArea(
             child: Column(children: [
-          if (mockProjects.isEmpty) Text("Нет проектов"),
+          if (mockProjects.isEmpty) const Text("Нет проектов"),
           Expanded(
               child: ListView.builder(
                   itemCount: mockProjects.length,
