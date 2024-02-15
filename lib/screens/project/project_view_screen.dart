@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
-import 'package:pechkin_flutter/screens/project/widgets/project_view_request.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request.dart';
 import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
@@ -33,6 +33,15 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
         appBar: AppBar(
           title: Text(project.name),
           actions: [
+            DropdownButton(
+              value: selectedRequest,
+              items: [
+                DropdownMenuItem(value: 0, child: Text("ENV не выбран")),
+                DropdownMenuItem(value: 1, child: Text("Dev stand")),
+                DropdownMenuItem(value: 2, child: Text("Test stand")),
+              ],
+              onChanged: (value) {},
+            ),
             PopupMenuButton(
                 onSelected: (value) {
                   if (value == 1) {
@@ -59,20 +68,32 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                       itemCount: groups.length,
                       itemBuilder: (context, index) {
                         return ProjectGroupsList(
-                          selectedRequest: selectedRequest,
-                          groupId: groups.elementAt(index).id,
-                          onTapRequest: (id) {
-                            setState(() => selectedRequest = id);
-                          }
-                        );
+                            selectedRequest: selectedRequest,
+                            groupId: groups.elementAt(index).id,
+                            onTapRequest: (id) {
+                              setState(() => selectedRequest = id);
+                            });
                       },
                     ),
                   ),
+                  SizedBox(width: 10),
                   if (w > 700)
                     Flexible(
                       flex: w > 1000 ? (w > 1300 ? 7 : 3) : 1,
                       child: Column(children: [
-                        if (selectedRequest == 0) Text('Тут будет инфа, для выбранного маршрута'),
+                        if (selectedRequest == 0)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Переменные среды', style: Theme.of(context).textTheme.titleMedium),
+                              SizedBox(height: 10),
+                              SelectableText('baseUrl: https://test.ru'),
+                              SelectableText('token: sdjkfhskdsdffahsdgfkjahsgdfjahsd'),
+                              SelectableText('isDev: true'),
+                              SizedBox(height: 20),
+                              Text('Тут будет инфа, для выбранного маршрута'),
+                            ],
+                          ),
                         if (selectedRequest > 0) ProjectViewRequest(id: selectedRequest)
                       ]),
                     ),
