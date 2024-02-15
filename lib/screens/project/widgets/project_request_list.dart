@@ -15,6 +15,7 @@ class ProjectRequestList extends StatelessWidget {
     return Column(children: [
       for (var request in requests)
         ListTile(
+          leading: SizedBox(),
             title: Text(request.name),
             subtitle: Text("[${request.type.toUpperCase()}] ${request.path}"),
             trailing: PopupMenuButton(
