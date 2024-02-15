@@ -18,6 +18,7 @@ class ProjectViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final project = mockProjects.firstWhere((project) => project.id == id);
     final groups = mockProjectGroups.where((element) => element.projectId == id);
+    final w = MediaQuery.of(context).size.width;
 
     return Scaffold(
         appBar: AppBar(
@@ -57,12 +58,27 @@ class ProjectViewScreen extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(project.description),
             Expanded(
-                child: ListView.builder(
-              itemCount: groups.length,
-              itemBuilder: (context, index) {
-                return ProjectGroupsList(groupId: groups.elementAt(index).id);
-              },
-            )),
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: w > 1000 ? 2 : 1,
+                    child: ListView.builder(
+                      itemCount: groups.length,
+                      itemBuilder: (context, index) {
+                        return ProjectGroupsList(groupId: groups.elementAt(index).id);
+                      },
+                    ),
+                  ),
+                  if (w > 500)
+                    Flexible(
+                      flex: w > 1000 ? ( w > 1300 ? 7 : 3) : 1,
+                      child: Column(children: [
+                        Text('Тут будет инфа, для выбранного маршрута'),
+                      ]),
+                    ),
+                ],
+              ),
+            ),
           ]),
         ));
   }
