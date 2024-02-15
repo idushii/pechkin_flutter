@@ -29,16 +29,25 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+
     if (isSmallScreen) {
       return SizedBox(
           width: 50,
           child: Column(children: [
+            if (w > 500)
             IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () => setState(() {
                 isSmallScreen = !isSmallScreen;
               }),
             ),
+            if (w <= 500)
+              Container(
+                height: 50,
+                alignment: Alignment.center,
+                child: const Icon(Icons.menu),
+              ),
             IconButton(
               icon: const Icon(Icons.folder_open),
               onPressed: () => context.goNamed(ProjectsScreen.route),
