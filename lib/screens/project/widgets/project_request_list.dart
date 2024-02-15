@@ -5,8 +5,10 @@ import 'package:pechkin_flutter/state/mocks.dart';
 
 class ProjectRequestList extends StatelessWidget {
   final int groupId;
+  final Function(int id) onTapRequest;
+  final int selectedRequest;
 
-  const ProjectRequestList({super.key, required this.groupId});
+  const ProjectRequestList({super.key, required this.groupId, required this.onTapRequest, required this.selectedRequest});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,8 @@ class ProjectRequestList extends StatelessWidget {
     return Column(children: [
       for (var request in requests)
         ListTile(
-          leading: SizedBox(),
+            leading: SizedBox(),
+            selected: selectedRequest == request.id,
             title: Text(request.name),
             subtitle: Text("[${request.type.toUpperCase()}] ${request.path}"),
             trailing: PopupMenuButton(
@@ -28,7 +31,13 @@ class ProjectRequestList extends StatelessWidget {
                 ];
               },
             ),
-            onTap: () {})
+            onTap: () {
+              if (selectedRequest == request.id) {
+                onTapRequest(0);
+              } else {
+                onTapRequest(request.id);
+              }
+            })
     ]);
   }
 }

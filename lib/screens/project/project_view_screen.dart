@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_view_request.dart';
 import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
-class ProjectViewScreen extends StatelessWidget {
+class ProjectViewScreen extends StatefulWidget {
   const ProjectViewScreen({super.key, required this.id});
 
   final int id;
@@ -15,9 +17,16 @@ class ProjectViewScreen extends StatelessWidget {
   static const routeName = "project_view";
 
   @override
+  State<ProjectViewScreen> createState() => _ProjectViewScreenState();
+}
+
+class _ProjectViewScreenState extends State<ProjectViewScreen> {
+  int selectedRequest = 0;
+
+  @override
   Widget build(BuildContext context) {
-    final project = mockProjects.firstWhere((project) => project.id == id);
-    final groups = mockProjectGroups.where((element) => element.projectId == id);
+    final project = mockProjects.firstWhere((project) => project.id == widget.id);
+    final groups = mockProjectGroups.where((element) => element.projectId == widget.id);
     final w = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -27,44 +36,20 @@ class ProjectViewScreen extends StatelessWidget {
             PopupMenuButton(
                 onSelected: (value) {
                   if (value == 1) {
-                    context.goNamed(ProjectEditScreen.routeName, pathParameters: {'id': id.toString()});
+                    context.goNamed(ProjectEditScreen.routeName, pathParameters: {'id': widget.id.toString()});
                   }
                 },
                 icon: const Icon(Icons.more_vert),
-                itemBuilder: (context) {
-                  return [
-                    const PopupMenuItem(
-                      value: 1,
-                      child: Text('Изменить'),
-                    ),
-                    const PopupMenuItem(
-                      value: 2,
-                      child: Text('Поделиться'),
-                    ),
-                    const PopupMenuItem(
-                      value: 3,
-                      child: Text('Копировать'),
-                    ),
-                    const PopupMenuItem(
-                      value: 4,
-                      child: Text('Импорт'),
-                    ),
-                    const PopupMenuItem(
-                      value: 5,
-                      child: Text('Создать версию'),
-                    ),
-                    const PopupMenuItem(
-                      value: 6,
-                      child: Text('Добавить группу'),
-                    ),
-                  ];
-                })
+                itemBuilder: (context) => projectActions)
           ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(project.description),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(project.description),
+            ),
             Expanded(
               child: Row(
                 children: [
@@ -73,15 +58,22 @@ class ProjectViewScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: groups.length,
                       itemBuilder: (context, index) {
-                        return ProjectGroupsList(groupId: groups.elementAt(index).id);
+                        return ProjectGroupsList(
+                          selectedRequest: selectedRequest,
+                          groupId: groups.elementAt(index).id,
+                          onTapRequest: (id) {
+                            setState(() => selectedRequest = id);
+                          }
+                        );
                       },
                     ),
                   ),
                   if (w > 700)
                     Flexible(
-                      flex: w > 1000 ? ( w > 1300 ? 7 : 3) : 1,
-                      child: const Column(children: [
-                        Text('Тут будет инфа, для выбранного маршрута'),
+                      flex: w > 1000 ? (w > 1300 ? 7 : 3) : 1,
+                      child: Column(children: [
+                        if (selectedRequest == 0) Text('Тут будет инфа, для выбранного маршрута'),
+                        if (selectedRequest > 0) ProjectViewRequest(id: selectedRequest)
                       ]),
                     ),
                 ],
