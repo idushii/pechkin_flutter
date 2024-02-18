@@ -29,7 +29,7 @@ class ProjectRequestScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.only(left: 10),
-          child: SingleChildScrollView(child: ProjectViewRequest(id: requestId)),
+          child: ProjectViewRequest(id: requestId),
         ),
       ),
     );

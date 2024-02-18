@@ -1,49 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload_item.dart';
 
 class ProjectViewRequestPayload extends StatelessWidget {
-  final ProjectRequestPayload payload;
-  final bool isLast;
+  final List<ProjectRequestPayload> payload;
+  final String title;
   final bool isEdit;
 
-  const ProjectViewRequestPayload({super.key, required this.payload, required this.isLast, required this.isEdit});
+  const ProjectViewRequestPayload({super.key, required this.payload, required this.title, required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
-    final name = "${payload.name}${(payload.type == ProjectRequestPayloadType.ARRAY || payload.isArray) ? '[]' : ''}";
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
       children: [
-        if (payload.path.isNotEmpty)
-          Container(
-            decoration: const BoxDecoration(border: Border(left: BorderSide(color: Colors.grey))),
-            width: 10,
-            height: isLast ? 10 : 20,
-            margin: EdgeInsets.only(bottom: isLast ? 10 : 0),
-          ),
-        for (var i = 0; i < payload.path.length; i++) const SizedBox(width: 20, height: 20),
-        Column(
+        Row(
           children: [
-            Container(
-              decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey), left: BorderSide(color: Colors.grey))),
-              width: 10,
-              height: 10,
-            ),
-            Container(
-              decoration: isLast ? null : const BoxDecoration(border: Border(left: BorderSide(color: Colors.grey))),
-              width: 10,
-              height: 10,
-            )
-          ],
+            Expanded(child: Text(title, style: Theme.of(context).textTheme.titleMedium)),
+            // const Icon(Icons.edit, size: 12),
+            SizedBox(width: 10,),
+          ]
         ),
-        const SizedBox(width: 10),
-        Expanded(child: Text(name)),
-        if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
-          Expanded(child: Text(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
-          Expanded(child: Text(payload.type)),
-        ],
+
+        for (var i = 0; i < payload.length; i++)
+          ProjectViewRequestPayloadItem(payload: payload[i], isLast: i == payload.length - 1, isEdit: false),
       ],
     );
   }

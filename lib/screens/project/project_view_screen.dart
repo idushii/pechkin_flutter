@@ -99,7 +99,7 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                               const SelectableText('Тут будет инфа, для выбранного маршрута'),
                             ],
                           ),
-                        if (selectedRequest > 0) ProjectViewRequest(id: selectedRequest)
+                        if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
                       ]),
                     ),
                 ],
