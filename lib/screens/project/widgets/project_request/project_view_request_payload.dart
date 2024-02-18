@@ -41,7 +41,7 @@ class ProjectViewRequestPayload extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(child: Text(name)),
         if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
-          Expanded(child: Text(payload.description)),
+          Expanded(child: Text(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
           Expanded(child: Text(payload.type)),
         ],
       ],

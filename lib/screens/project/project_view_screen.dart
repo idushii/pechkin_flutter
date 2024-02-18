@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request.dart';
 import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
@@ -21,7 +22,7 @@ class ProjectViewScreen extends StatefulWidget {
 }
 
 class _ProjectViewScreenState extends State<ProjectViewScreen> {
-  int selectedRequest = 1;
+  int selectedRequest = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +73,12 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                             groupId: groups.elementAt(index).id,
                             onTapRequest: (id) {
                               setState(() => selectedRequest = id);
+                              if (w <= 700) {
+                                context.goNamed(ProjectRequestScreen.routeName, pathParameters: {
+                                  'id': widget.id.toString(),
+                                  'requestId': selectedRequest.toString(),
+                                });
+                              }
                             });
                       },
                     ),

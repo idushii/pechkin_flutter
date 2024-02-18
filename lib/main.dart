@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
 import 'package:pechkin_flutter/screens/projects_screen.dart';
 import 'package:pechkin_flutter/shared/menu.dart';
@@ -33,25 +34,28 @@ final _router = GoRouter(
             path: '/',
             builder: (context, state) => const ProjectsScreen(),
           ),
-          GoRoute(
-            path: ProjectsScreen.route,
-            name: ProjectsScreen.route,
-            builder: (context, state) => const ProjectsScreen(),
-            routes: [
-              GoRoute(
-                path: ProjectViewScreen.route,
-                name: ProjectViewScreen.routeName,
-                builder: (context, state) => ProjectViewScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
-                routes: [
-                  GoRoute(
+          GoRoute(path: ProjectsScreen.route, name: ProjectsScreen.route, builder: (context, state) => const ProjectsScreen(), routes: [
+            GoRoute(
+              path: ProjectViewScreen.route,
+              name: ProjectViewScreen.routeName,
+              builder: (context, state) => ProjectViewScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
+              routes: [
+                GoRoute(
                     path: ProjectEditScreen.route,
                     name: ProjectEditScreen.routeName,
                     builder: (context, state) => ProjectEditScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
+                ),
+                GoRoute(
+                  path: ProjectRequestScreen.route,
+                  name: ProjectRequestScreen.routeName,
+                  builder: (context, state) => ProjectRequestScreen(
+                    projectId: int.parse(state.pathParameters['id'] ?? '0'),
+                    requestId: int.parse(state.pathParameters['requestId'] ?? '0'),
                   ),
-                ],
-              ),
-            ]
-          ),
+                ),
+              ],
+            ),
+          ]),
         ]),
   ],
 );
