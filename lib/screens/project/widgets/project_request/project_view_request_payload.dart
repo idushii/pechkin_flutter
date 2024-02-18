@@ -10,26 +10,38 @@ class ProjectViewRequestPayload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Column(
-        children: [
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if (payload.path.isNotEmpty)
           Container(
+            decoration: const BoxDecoration(border: Border(left: BorderSide(color: Colors.grey))),
+            width: 10,
+            height: isLast ? 10 : 20,
+            margin: EdgeInsets.only(bottom: isLast ? 10 : 0),
+          ),
+        for (var i = 0; i < payload.path.length; i++) const SizedBox(width: 20, height: 20),
+        Column(
+          children: [
+            Container(
               decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey), left: BorderSide(color: Colors.grey))),
               width: 10,
               height: 10,
-          ),
+            ),
             Container(
               decoration: isLast ? null : const BoxDecoration(border: Border(left: BorderSide(color: Colors.grey))),
               width: 10,
               height: 10,
             )
+          ],
+        ),
+        const SizedBox(width: 10),
+        Expanded(child: Text("${payload.name}${(payload.type == ProjectRequestPayloadType.ARRAY || payload.isArray) ? '[]' : ''}")),
+        if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
+          Expanded(child: Text(payload.description)),
+          Expanded(child: Text(payload.type)),
         ],
-      ),
-      const SizedBox(width: 10),
-      Expanded(child: Text(payload.name)),
-      Expanded(child: Text(payload.description)),
-      Expanded(child: Text(payload.type)),
-      Expanded(child: Text(payload.isArray.toString())),
-    ]);
+      ],
+    );
   }
 }
