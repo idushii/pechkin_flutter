@@ -27,7 +27,7 @@ class ProjectRequestList extends StatelessWidget {
               itemBuilder: (context) {
                 return [
                   const PopupMenuItem(value: 1, child: Text('Изменить')),
-                  const PopupMenuItem(value: 1, child: Text('Удалить')),
+                  const PopupMenuItem(value: 2, child: Text('Удалить')),
                 ];
               },
             ),

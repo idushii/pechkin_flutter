@@ -35,8 +35,8 @@ class _ProjectGroupsListState extends State<ProjectGroupsList> {
             itemBuilder: (context) {
               return [
                 const PopupMenuItem(value: 1, child: Text('Добавить запрос')),
-                const PopupMenuItem(value: 1, child: Text('Изменить')),
-                const PopupMenuItem(value: 1, child: Text('Поделиться')),
+                const PopupMenuItem(value: 2, child: Text('Изменить')),
+                const PopupMenuItem(value: 3, child: Text('Поделиться')),
               ];
             }
           )),

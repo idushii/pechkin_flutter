@@ -21,7 +21,7 @@ class ProjectViewScreen extends StatefulWidget {
 }
 
 class _ProjectViewScreenState extends State<ProjectViewScreen> {
-  int selectedRequest = 0;
+  int selectedRequest = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +34,8 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
           title: Text(project.name),
           actions: [
             DropdownButton(
-              value: selectedRequest,
-              items: [
+              value: 0,
+              items: const [
                 DropdownMenuItem(value: 0, child: Text("ENV не выбран")),
                 DropdownMenuItem(value: 1, child: Text("Dev stand")),
                 DropdownMenuItem(value: 2, child: Text("Test stand")),
@@ -76,7 +76,7 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   if (w > 700)
                     Flexible(
                       flex: w > 1000 ? (w > 1300 ? 7 : 3) : 1,
@@ -86,10 +86,10 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Переменные среды', style: Theme.of(context).textTheme.titleMedium),
-                              SizedBox(height: 10),
-                              SelectableText('baseUrl: https://test.ru \ntoken: sdjkfhskdsdffahsdgfkjahsgdfjahsd \nisDev: true'),
-                              SizedBox(height: 20),
-                              SelectableText('Тут будет инфа, для выбранного маршрута'),
+                              const SizedBox(height: 10),
+                              const SelectableText('baseUrl: https://test.ru \ntoken: sdjkfhskdsdffahsdgfkjahsgdfjahsd \nisDev: true'),
+                              const SizedBox(height: 20),
+                              const SelectableText('Тут будет инфа, для выбранного маршрута'),
                             ],
                           ),
                         if (selectedRequest > 0) ProjectViewRequest(id: selectedRequest)
