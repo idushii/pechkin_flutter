@@ -65,12 +65,12 @@ class ProjectViewRequest extends StatelessWidget {
         Text('Данные для отправки', style: Theme.of(context).textTheme.titleSmall),
         SizedBox(height: 10),
         for (var item in request.payload)
-          ProjectViewRequestPayload(payload: item, isLast: item == request.payload.last),
+          ProjectViewRequestPayload(payload: item, isLast: item == request.payload.last, isEdit: true),
         SizedBox(height: 10),
         Text('Ответ', style: Theme.of(context).textTheme.titleSmall),
         SizedBox(height: 10),
         for (var item in request.response)
-          ProjectViewRequestPayload(payload: item, isLast: item == request.response.last),
+          ProjectViewRequestPayload(payload: item, isLast: item == request.response.last, isEdit: true),
       ],
     );
   }

@@ -5,11 +5,14 @@ import 'package:pechkin_flutter/models/project_request.dart';
 class ProjectViewRequestPayload extends StatelessWidget {
   final ProjectRequestPayload payload;
   final bool isLast;
+  final bool isEdit;
 
-  const ProjectViewRequestPayload({super.key, required this.payload, required this.isLast});
+  const ProjectViewRequestPayload({super.key, required this.payload, required this.isLast, required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
+    final name = "${payload.name}${(payload.type == ProjectRequestPayloadType.ARRAY || payload.isArray) ? '[]' : ''}";
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -36,7 +39,7 @@ class ProjectViewRequestPayload extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 10),
-        Expanded(child: Text("${payload.name}${(payload.type == ProjectRequestPayloadType.ARRAY || payload.isArray) ? '[]' : ''}")),
+        Expanded(child: Text(name)),
         if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
           Expanded(child: Text(payload.description)),
           Expanded(child: Text(payload.type)),
