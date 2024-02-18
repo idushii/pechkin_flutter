@@ -21,15 +21,18 @@ class ProjectRequestList extends StatelessWidget {
             selected: selectedRequest == request.id,
             title: Text(request.name),
             subtitle: Text("[${request.type.toUpperCase()}] ${request.path}"),
-            trailing: PopupMenuButton(
-              onSelected: (value) {},
-              icon: const Icon(Icons.more_vert),
-              itemBuilder: (context) {
-                return [
-                  const PopupMenuItem(value: 1, child: Text('Изменить')),
-                  const PopupMenuItem(value: 2, child: Text('Удалить')),
-                ];
-              },
+            trailing: Container(
+              transform:  Matrix4.translationValues(20.0, 0.0, 0.0),
+              child: PopupMenuButton(
+                onSelected: (value) {},
+                icon: const Icon(Icons.more_vert),
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem(value: 1, child: Text('Изменить')),
+                    const PopupMenuItem(value: 2, child: Text('Удалить')),
+                  ];
+                },
+              ),
             ),
             onTap: () {
               if (selectedRequest == request.id) {

@@ -29,16 +29,19 @@ class _ProjectGroupsListState extends State<ProjectGroupsList> {
           onTap: () => setState(() => isExpanded = !isExpanded),
           leading: Icon(isExpanded ? Icons.expand_more : Icons.expand_less),
           title: Text(groups.name, style: Theme.of(context).textTheme.titleMedium),
-          trailing: PopupMenuButton(
-            onSelected: (value) {},
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (context) {
-              return [
-                const PopupMenuItem(value: 1, child: Text('Добавить запрос')),
-                const PopupMenuItem(value: 2, child: Text('Изменить')),
-                const PopupMenuItem(value: 3, child: Text('Поделиться')),
-              ];
-            }
+          trailing: Container(
+            transform:  Matrix4.translationValues(20.0, 0.0, 0.0),
+            child: PopupMenuButton(
+              onSelected: (value) {},
+              icon: const Icon(Icons.more_vert),
+              itemBuilder: (context) {
+                return [
+                  const PopupMenuItem(value: 1, child: Text('Добавить запрос')),
+                  const PopupMenuItem(value: 2, child: Text('Изменить')),
+                  const PopupMenuItem(value: 3, child: Text('Поделиться')),
+                ];
+              }
+            ),
           )),
         if (children.isNotEmpty && isExpanded)
           for (var group in children) ProjectGroupsList(groupId: group.id, onTapRequest: widget.onTapRequest, selectedRequest: widget.selectedRequest),
