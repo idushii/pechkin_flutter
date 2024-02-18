@@ -43,7 +43,10 @@ final mockProjectRequests = [
       name: "Список задач",
       description: "Список задач",
       type: RequestType.GET,
-      payload: [],
+      payload: [
+        ProjectRequestPayload.int('page', 'Страница'),
+        ProjectRequestPayload.int('limit', 'На странице'),
+      ],
       response: [
         ProjectRequestPayload([], name: 'items', description: 'items', isArray: false, type: ProjectRequestPayloadType.ARRAY),
         ProjectRequestPayload.int('id', 'Id', ['items']),
