@@ -43,15 +43,28 @@ final mockProjectRequests = [
       name: "Список задач",
       description: "Список задач",
       type: RequestType.GET,
-      payload: [],
+      payload: [
+        ProjectRequestPayload.int('page', 'Страница'),
+        ProjectRequestPayload.int('limit', 'На странице'),
+      ],
       response: [
-        ProjectRequestPayload.int('id', 'Id'),
-        ProjectRequestPayload.string('name', 'Наименование'),
-        ProjectRequestPayload.string('text', 'Текст'),
-        ProjectRequestPayload.string('status', 'Статус'),
-        ProjectRequestPayload.string('executor', 'Исполнитель'),
-        ProjectRequestPayload.string('creator', 'Создатель'),
-        ProjectRequestPayload.string('date', 'Дата'),
+        ProjectRequestPayload([], name: 'items', description: 'items', isArray: false, type: ProjectRequestPayloadType.ARRAY),
+        ProjectRequestPayload.int('id', 'Id', ['items']),
+        ProjectRequestPayload.string('name', 'Наименование', ['items']),
+        ProjectRequestPayload.string('text', 'Текст', ['items']),
+        ProjectRequestPayload.string('status', 'Статус', ['items']),
+        ProjectRequestPayload.string('executor', 'Исполнитель', ['items']),
+        ProjectRequestPayload.string('creator', 'Создатель', ['items']),
+        ProjectRequestPayload.string('date', 'Дата', ['items']),
+        ProjectRequestPayload([], name: 'meta', description: 'meta', isArray: false, type: ProjectRequestPayloadType.OBJECT),
+        ProjectRequestPayload.int('total', 'Всего', ['meta']),
+        ProjectRequestPayload.int('page', 'Страница', ['meta']),
+        ProjectRequestPayload.int('limit', 'На странице', ['meta']),
+        ProjectRequestPayload([], name: 'append', description: 'append', isArray: true, type: ProjectRequestPayloadType.OBJECT),
+        ProjectRequestPayload.int('append', 'Дополнительные данные', ['append']),
+        ProjectRequestPayload([], name: 'tags', description: 'tags', isArray: true, type: ProjectRequestPayloadType.ARRAY),
+        ProjectRequestPayload.int('id', 'id', ['tags']),
+         ProjectRequestPayload.string('name', 'Наименование', ['tags']),
       ]),
   ProjectRequest(id: 4, projectId: 1, groupId: 2, path: '/task', name: "Создание задачи", description: "Создание задачи", type: RequestType.POST, payload: [
     ProjectRequestPayload.string('name', 'Наименование'),
@@ -87,7 +100,25 @@ final mockProjectRequests = [
       payload: [],
       response: [
         ProjectRequestPayload.int('status', 'Статус'),
-      ])
+      ]),
+  ProjectRequest(
+      id: 7,
+      projectId: 1,
+      groupId: 3,
+      path: '/requests',
+      name: "Получение запросов",
+      description: "Получение запросов",
+      type: RequestType.GET,
+      payload: [],
+      response: [
+        ProjectRequestPayload([], name: 'items', description: 'items', type: ProjectRequestPayloadType.ARRAY, isArray: false),
+        ProjectRequestPayload.string('path', 'Path', ['items']),
+        ProjectRequestPayload.int('id', 'Id', ['items']),
+        ProjectRequestPayload.string('name', 'Наименование', ['items']),
+        ProjectRequestPayload.string('text', 'Описание', ['items']),
+        ProjectRequestPayload.string('type', 'Тип', ['items']),
+        ProjectRequestPayload.string('isArray', 'Это массив', ['items']),
+      ]),
 ];
 
 final List<ProjectRequestGroup> mockProjectGroups = [
@@ -108,6 +139,15 @@ final List<ProjectRequestGroup> mockProjectGroups = [
     description: "Доска задач",
     requests: mockProjectRequests.where((element) => element.groupId == 2).toList(),
     comments: [],
+  ),
+  ProjectRequestGroup(
+    id: 3,
+    projectId: 1,
+    parentId: 0,
+    name: "Http запросы",
+    description: "Http запросы",
+    comments: [],
+    requests: mockProjectRequests.where((element) => element.groupId == 3).toList(),
   )
 ];
 

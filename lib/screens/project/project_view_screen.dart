@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
+import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request.dart';
 import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
@@ -34,8 +35,8 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
           title: Text(project.name),
           actions: [
             DropdownButton(
-              value: selectedRequest,
-              items: [
+              value: 0,
+              items: const [
                 DropdownMenuItem(value: 0, child: Text("ENV не выбран")),
                 DropdownMenuItem(value: 1, child: Text("Dev stand")),
                 DropdownMenuItem(value: 2, child: Text("Test stand")),
@@ -72,11 +73,17 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                             groupId: groups.elementAt(index).id,
                             onTapRequest: (id) {
                               setState(() => selectedRequest = id);
+                              if (w <= 700) {
+                                context.goNamed(ProjectRequestScreen.routeName, pathParameters: {
+                                  'id': widget.id.toString(),
+                                  'requestId': selectedRequest.toString(),
+                                });
+                              }
                             });
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   if (w > 700)
                     Flexible(
                       flex: w > 1000 ? (w > 1300 ? 7 : 3) : 1,
@@ -86,13 +93,13 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Переменные среды', style: Theme.of(context).textTheme.titleMedium),
-                              SizedBox(height: 10),
-                              SelectableText('baseUrl: https://test.ru \ntoken: sdjkfhskdsdffahsdgfkjahsgdfjahsd \nisDev: true'),
-                              SizedBox(height: 20),
-                              SelectableText('Тут будет инфа, для выбранного маршрута'),
+                              const SizedBox(height: 10),
+                              const SelectableText('baseUrl: https://test.ru \ntoken: sdjkfhskdsdffahsdgfkjahsgdfjahsd \nisDev: true'),
+                              const SizedBox(height: 20),
+                              const SelectableText('Тут будет инфа, для выбранного маршрута'),
                             ],
                           ),
-                        if (selectedRequest > 0) ProjectViewRequest(id: selectedRequest)
+                        if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
                       ]),
                     ),
                 ],

@@ -14,27 +14,34 @@ class ProjectRequestPayloadType {
   static const String DATE = 'date';
   static const String DATE_TIME = 'date_time';
   static const String FILE = 'file';
+  static const String ARRAY = 'array';
+  static const String OBJECT = 'object';
 }
 
 class ProjectRequestPayload {
+  final List<String> path;
   final String name;
   final String description;
   final String type;
   final bool isArray;
 
-  ProjectRequestPayload({required this.name, required this.description, required this.type, required this.isArray});
+  ProjectRequestPayload(this.path, {required this.name, required this.description, required this.type, required this.isArray});
 
+  // from map
   static ProjectRequestPayload fromMap(Map<String, dynamic> json) {
     return ProjectRequestPayload(
-      name: json['name'] ?? '',
-      description: json['description'] ?? '',
-      type: json['type'] ?? ProjectRequestPayloadType.STRING,
-      isArray: json['isArray'] ?? false,
+      json['path'],
+      name: json['name'],
+      description: json['description'],
+      type: json['type'],
+      isArray: json['isArray'],
     );
   }
 
+  // toMap
   Map<String, dynamic> toMap() {
     return {
+      'path': path,
       'name': name,
       'description': description,
       'type': type,
@@ -42,8 +49,10 @@ class ProjectRequestPayload {
     };
   }
 
+  // empty
   static ProjectRequestPayload empty() {
     return ProjectRequestPayload(
+      [],
       name: '',
       description: '',
       type: ProjectRequestPayloadType.STRING,
@@ -51,36 +60,43 @@ class ProjectRequestPayload {
     );
   }
 
-  static ProjectRequestPayload string(String name, String desc) {
+  static ProjectRequestPayload string(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
+      path,
       name: name,
       description: desc,
       type: ProjectRequestPayloadType.STRING,
-      isArray: false,
+      isArray: isArray,
     );
   }
-  static ProjectRequestPayload int(String name, String desc) {
+
+  static ProjectRequestPayload int(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
+      path,
       name: name,
       description: desc,
       type: ProjectRequestPayloadType.INT,
-      isArray: false,
+      isArray: isArray,
     );
   }
-  static ProjectRequestPayload double(String name, String desc) {
+
+  static ProjectRequestPayload double(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
+      path,
       name: name,
       description: desc,
       type: ProjectRequestPayloadType.DOUBLE,
-      isArray: false,
+      isArray: isArray,
     );
   }
-  static ProjectRequestPayload boolean(String name, String desc) {
+
+  static ProjectRequestPayload boolean(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
+      path,
       name: name,
       description: desc,
       type: ProjectRequestPayloadType.BOOLEAN,
-      isArray: false,
+      isArray: isArray,
     );
   }
 }

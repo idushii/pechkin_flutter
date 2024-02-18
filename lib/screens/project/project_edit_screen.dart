@@ -52,6 +52,7 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
               itemBuilder: (context) {
                 return [
                   const PopupMenuItem(value: 1, child: Text('Удалить')),
+                  const PopupMenuItem(value: 2, child: Text('Удалить2')),
                 ];
               }
             )
