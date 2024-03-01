@@ -67,27 +67,30 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
                     minWidth: 600,
                     maxWidth: max(constraints.maxWidth, 600),
                   ) : null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ProjectRequestTitle(
-                          request: request,
-                          form: form,
-                          isEdit: isEdit,
-                          onEdit: () {
-                            setState(() {
-                              isEdit = !isEdit;
-                            });
-                          }),
-                      const SizedBox(height: 10),
-                      ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
-                      const SizedBox(height: 20),
-                      ProjectViewRequestPayload(payload: request.payload, title: 'Данные для отправки', isEdit: isEdit),
-                      const SizedBox(height: 10),
-                      ProjectViewRequestPayload(payload: request.response, title: 'Ответ', isEdit: isEdit),
-                      const SizedBox(height: 20),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ProjectRequestTitle(
+                            request: request,
+                            form: form,
+                            isEdit: isEdit,
+                            onEdit: () {
+                              setState(() {
+                                isEdit = !isEdit;
+                              });
+                            }),
+                        const SizedBox(height: 10),
+                        ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
+                        const SizedBox(height: 20),
+                        ProjectViewRequestPayload(payload: request.payload, title: 'Данные для отправки', isEdit: isEdit),
+                        const SizedBox(height: 10),
+                        ProjectViewRequestPayload(payload: request.response, title: 'Ответ', isEdit: isEdit),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ),
               ),
