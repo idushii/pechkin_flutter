@@ -16,6 +16,8 @@ class ProjectRequestPayloadType {
   static const String FILE = 'file';
   static const String ARRAY = 'array';
   static const String OBJECT = 'object';
+
+  static get values =>  [STRING, INT, DOUBLE, BOOLEAN, DATE, DATE_TIME, FILE, ARRAY, OBJECT];
 }
 
 class ProjectRequestPayload {

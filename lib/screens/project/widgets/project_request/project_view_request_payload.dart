@@ -23,7 +23,7 @@ class ProjectViewRequestPayload extends StatelessWidget {
         ),
 
         for (var i = 0; i < payload.length; i++)
-          ProjectViewRequestPayloadItem(payload: payload[i], isLast: i == payload.length - 1, isEdit: false),
+          ProjectViewRequestPayloadItem(payload: payload[i], isLast: i == payload.length - 1, isEdit: isEdit),
       ],
     );
   }
