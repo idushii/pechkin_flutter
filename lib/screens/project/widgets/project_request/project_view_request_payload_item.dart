@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/shared/copied_text.dart';
+import 'package:pechkin_flutter/shared/typed/is_obj.dart';
 
 class ProjectViewRequestPayloadItem extends StatelessWidget {
   final ProjectRequestPayload payload;
@@ -12,14 +16,25 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = "${payload.name}${(payload.type == ProjectRequestPayloadType.ARRAY || payload.isArray) ? '[]' : ''}";
+    final isNoCompact = MediaQuery.of(context).size.width > 600;
 
     final textFieldStyle = InputDecoration(
-      contentPadding: MediaQuery.of(context).size.width > 600 ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5) : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      contentPadding: isNoCompact ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5) : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       isDense: true,
-      border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.zero),
+      border: const OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.zero,
+      ),
     );
 
-    final double size = isEdit ? 20 : 10;
+    double size = isEdit ? 20 : 10;
+    if (isEdit) {
+      if (isNoCompact) {
+        size = 15;
+      } else {
+        size = 10;
+      }
+    }
 
     return Form(
       child: Row(
@@ -29,10 +44,10 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
             Container(
               decoration: const BoxDecoration(border: Border(left: BorderSide(color: Colors.grey))),
               width: size,
-              height: isLast ? size : size*2,
+              height: isLast ? size : size * 2,
               margin: EdgeInsets.only(bottom: isLast ? size : 0),
             ),
-          for (var i = 0; i < payload.path.length; i++) SizedBox(width: size*2, height: size*2),
+          for (var i = 0; i < payload.path.length; i++) SizedBox(width: size * 2, height: size * 2),
           Column(
             children: [
               Container(
@@ -48,13 +63,13 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
             ],
           ),
           const SizedBox(width: 10),
-          Expanded(child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : Text(name)),
-          if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
-            Expanded(
-                child: isEdit
-                    ? TextFormField(controller: TextEditingController(text: payload.description), decoration: textFieldStyle)
-                    : Text(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
-            Expanded(
+          SizedBox(
+            width: isEdit ? (isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200) : isObj(payload.type) ? 230 : 200,
+            child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : CopiedText(name, minWidth: 700),
+          ),
+          if (payload.type != ProjectRequestPayloadType.NOT_TYPE)
+            SizedBox(
+                width: 130,
                 child: isEdit
                     ? DropdownButtonFormField<String>(
                         value: payload.type,
@@ -63,8 +78,22 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                         onChanged: (value) {
                           // TODO
                         })
-                    : Text(payload.type)),
-          ],
+                    : CopiedText(payload.type)),
+          Expanded(
+              flex: 3,
+              child: isEdit
+                  ? TextFormField(controller: TextEditingController(text: payload.description), decoration: textFieldStyle)
+                  : CopiedText(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
+          if (isEdit)
+          GestureDetector(
+            onTap: () {
+              // TODO
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Icon(Icons.remove, size: size * 2),
+            ),
+          ),
         ],
       ),
     );

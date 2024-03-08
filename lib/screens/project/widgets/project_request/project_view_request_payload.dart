@@ -18,7 +18,7 @@ class ProjectViewRequestPayload extends StatelessWidget {
           children: [
             Expanded(child: SelectableText(title, style: Theme.of(context).textTheme.titleMedium)),
             // const Icon(Icons.edit, size: 12),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
           ]
         ),
 

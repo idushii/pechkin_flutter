@@ -49,54 +49,33 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
       return const Center(child: Text('Запрос не найден'));
     }
 
-    var d = MediaQuery.of(context).size;
-    
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: SizedBox(
-              width: constraints.maxWidth,
-              child: SingleChildScrollView(
-                scrollDirection:  Axis.horizontal,
-                child: Container(
-                  width: isEdit ? null : constraints.maxWidth,
-                  constraints: isEdit ? BoxConstraints(
-                    minWidth: 600,
-                    maxWidth: max(constraints.maxWidth, 600),
-                  ) : null,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ProjectRequestTitle(
-                            request: request,
-                            form: form,
-                            isEdit: isEdit,
-                            onEdit: () {
-                              setState(() {
-                                isEdit = !isEdit;
-                              });
-                            }),
-                        const SizedBox(height: 10),
-                        ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
-                        const SizedBox(height: 20),
-                        ProjectViewRequestPayload(payload: request.payload, title: 'Данные для отправки', isEdit: isEdit),
-                        const SizedBox(height: 10),
-                        ProjectViewRequestPayload(payload: request.response, title: 'Ответ', isEdit: isEdit),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        }
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ProjectRequestTitle(
+                request: request,
+                form: form,
+                isEdit: isEdit,
+                onEdit: () {
+                  setState(() {
+                    isEdit = !isEdit;
+                  });
+                }),
+            const SizedBox(height: 10),
+            ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
+            const SizedBox(height: 20),
+            ProjectViewRequestPayload(payload: request.headers, title: 'Заголовки', isEdit: isEdit),
+            const SizedBox(height: 10),
+            ProjectViewRequestPayload(payload: request.payload, title: 'Данные для отправки', isEdit: isEdit),
+            const SizedBox(height: 10),
+            ProjectViewRequestPayload(payload: request.response, title: 'Ответ', isEdit: isEdit),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

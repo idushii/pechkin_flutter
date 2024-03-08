@@ -5,8 +5,11 @@ import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_info.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_groups.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request.dart';
 import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
+import 'package:pechkin_flutter/shared/splitter.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
 class ProjectViewScreen extends StatefulWidget {
@@ -24,11 +27,39 @@ class ProjectViewScreen extends StatefulWidget {
 class _ProjectViewScreenState extends State<ProjectViewScreen> {
   int selectedRequest = 0;
 
+  double initW = 0;
+  Key keySplitter = UniqueKey();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant ProjectViewScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      keySplitter = UniqueKey();
+      initW = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final project = mockProjects.firstWhere((project) => project.id == widget.id);
     final groups = mockProjectGroups.where((element) => element.projectId == widget.id);
     final w = MediaQuery.of(context).size.width;
+
+    if (initW == 0) {
+      initW = w;
+    } else {
+      if (initW != w) {
+        keySplitter = UniqueKey();
+        initW = w;
+      }
+    }
+
+    print(w);
 
     return Scaffold(
         appBar: AppBar(
@@ -61,48 +92,53 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
               child: Text(project.description),
             ),
             Expanded(
-              child: Row(
+              child: w > 700 ? Split(
+                key: keySplitter,
+                axis: Axis.horizontal,
+                initialFractions: (() {
+                  if (initW > 1500) {
+                    return [0.2, 0.8];
+                  }
+
+                  if (initW > 1000) {
+                    return [0.3, 0.7];
+                  }
+
+                  if (initW > 700) {
+                    return [0.4, 0.6];
+                  }
+
+                  return [0.5, 0.5];
+                })(),
                 children: [
-                  Flexible(
-                    flex: w > 1000 ? 2 : 1,
-                    child: ListView.builder(
-                      itemCount: groups.length,
-                      itemBuilder: (context, index) {
-                        return ProjectGroupsList(
-                            selectedRequest: selectedRequest,
-                            groupId: groups.elementAt(index).id,
-                            onTapRequest: (id) {
-                              setState(() => selectedRequest = id);
-                              if (w <= 700) {
-                                context.goNamed(ProjectRequestScreen.routeName, pathParameters: {
-                                  'id': widget.id.toString(),
-                                  'requestId': selectedRequest.toString(),
-                                });
-                              }
-                            });
-                      },
+                  ProjectsGroupsList(
+                      groups: groups.toList(),
+                      id: widget.id,
+                      onTapRequest: (id) {
+                        setState(() {
+                          selectedRequest = id;
+                        });
+                      }),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Column(
+                      key: Key('project_view_request_${selectedRequest}'),
+                      crossAxisAlignment:  CrossAxisAlignment.stretch,
+                      children: [
+                        if (selectedRequest == 0) ProjectInfo(project: project),
+                        if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  if (w > 700)
-                    Flexible(
-                      flex: w > 1000 ? (w > 1300 ? 7 : 3) : 1,
-                      child: Column(children: [
-                        if (selectedRequest == 0)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Переменные среды', style: Theme.of(context).textTheme.titleMedium),
-                              const SizedBox(height: 10),
-                              const SelectableText('baseUrl: https://test.ru \ntoken: sdjkfhskdsdffahsdgfkjahsgdfjahsd \nisDev: true'),
-                              const SizedBox(height: 20),
-                              const SelectableText('Тут будет инфа, для выбранного маршрута'),
-                            ],
-                          ),
-                        if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
-                      ]),
-                    ),
                 ],
+              ) : ProjectsGroupsList(
+                groups: groups.toList(),
+                id: widget.id,
+                onTapRequest: (id) {
+                  setState(() {
+                    selectedRequest = id;
+                  });
+                }
               ),
             ),
           ]),
