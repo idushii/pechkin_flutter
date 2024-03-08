@@ -21,10 +21,20 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
           ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5)
           : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       isDense: true,
-      border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.zero),
+      border: const OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.zero,
+      ),
     );
 
-    final double size = isEdit ? 20 : 10;
+    double size = isEdit ? 20 : 10;
+    if (isEdit) {
+      if (MediaQuery.of(context).size.width > 600) {
+        size = 13;
+      } else {
+        size = 10;
+      }
+    }
 
     return Form(
       child: Row(
@@ -59,7 +69,7 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
           ),
           if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
             Container(
-              width: 130,
+                width: 130,
                 child: isEdit
                     ? DropdownButtonFormField<String>(
                         value: payload.type,
