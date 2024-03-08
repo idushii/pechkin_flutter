@@ -92,7 +92,7 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
               child: Text(project.description),
             ),
             Expanded(
-              child: Split(
+              child: w > 700 ? Split(
                 key: keySplitter,
                 axis: Axis.horizontal,
                 initialFractions: (() {
@@ -119,15 +119,26 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                           selectedRequest = id;
                         });
                       }),
-                  Column(
-                    key: Key('project_view_request_${selectedRequest}'),
-                    crossAxisAlignment:  CrossAxisAlignment.stretch,
-                    children: [
-                      if (selectedRequest == 0) ProjectInfo(project: project),
-                      if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Column(
+                      key: Key('project_view_request_${selectedRequest}'),
+                      crossAxisAlignment:  CrossAxisAlignment.stretch,
+                      children: [
+                        if (selectedRequest == 0) ProjectInfo(project: project),
+                        if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
+                      ],
+                    ),
                   ),
                 ],
+              ) : ProjectsGroupsList(
+                groups: groups.toList(),
+                id: widget.id,
+                onTapRequest: (id) {
+                  setState(() {
+                    selectedRequest = id;
+                  });
+                }
               ),
             ),
           ]),
