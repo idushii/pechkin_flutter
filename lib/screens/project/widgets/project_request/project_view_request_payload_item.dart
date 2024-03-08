@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
 import 'package:pechkin_flutter/shared/copied_text.dart';
+import 'package:pechkin_flutter/shared/typed/is_obj.dart';
 
 class ProjectViewRequestPayloadItem extends StatelessWidget {
   final ProjectRequestPayload payload;
@@ -15,9 +16,10 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = "${payload.name}${(payload.type == ProjectRequestPayloadType.ARRAY || payload.isArray) ? '[]' : ''}";
+    final isNoCompact = MediaQuery.of(context).size.width > 600;
 
     final textFieldStyle = InputDecoration(
-      contentPadding: MediaQuery.of(context).size.width > 600
+      contentPadding: isNoCompact
           ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5)
           : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       isDense: true,
@@ -29,8 +31,8 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
 
     double size = isEdit ? 20 : 10;
     if (isEdit) {
-      if (MediaQuery.of(context).size.width > 600) {
-        size = 13;
+      if (isNoCompact) {
+        size = 15;
       } else {
         size = 10;
       }
@@ -63,12 +65,11 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
             ],
           ),
           const SizedBox(width: 10),
-          Expanded(
-            flex: 2,
+          Container(
+            width: isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200,
             child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : CopiedText(name, minWidth: 700),
           ),
-          if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
-            Container(
+            SizedBox(
                 width: 130,
                 child: isEdit
                     ? DropdownButtonFormField<String>(
@@ -84,7 +85,6 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                 child: isEdit
                     ? TextFormField(controller: TextEditingController(text: payload.description), decoration: textFieldStyle)
                     : CopiedText(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
-          ],
         ],
       ),
     );
