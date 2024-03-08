@@ -76,7 +76,7 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                         value: payload.type,
                         items: [for (var v in ProjectRequestPayloadType.values) DropdownMenuItem(value: v, child: Text(v))],
                         decoration: textFieldStyle,
-                        onChanged: (value) {
+                        onChanged: isObj(payload.type) ? null : (value) {
                           // TODO
                         })
                     : CopiedText(payload.type)),
