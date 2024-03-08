@@ -66,6 +66,8 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
             const SizedBox(height: 10),
             ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
             const SizedBox(height: 20),
+            ProjectViewRequestPayload(payload: request.headers, title: 'Заголовки', isEdit: isEdit),
+            const SizedBox(height: 10),
             ProjectViewRequestPayload(payload: request.payload, title: 'Данные для отправки', isEdit: isEdit),
             const SizedBox(height: 10),
             ProjectViewRequestPayload(payload: request.response, title: 'Ответ', isEdit: isEdit),

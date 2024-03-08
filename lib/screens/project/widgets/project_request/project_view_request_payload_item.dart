@@ -19,9 +19,7 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
     final isNoCompact = MediaQuery.of(context).size.width > 600;
 
     final textFieldStyle = InputDecoration(
-      contentPadding: isNoCompact
-          ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5)
-          : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      contentPadding: isNoCompact ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5) : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       isDense: true,
       border: const OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey),
@@ -69,6 +67,7 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
             width: isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200,
             child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : CopiedText(name, minWidth: 700),
           ),
+          if (payload.type != ProjectRequestPayloadType.NOT_TYPE)
             SizedBox(
                 width: 130,
                 child: isEdit
@@ -76,15 +75,25 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                         value: payload.type,
                         items: [for (var v in ProjectRequestPayloadType.values) DropdownMenuItem(value: v, child: Text(v))],
                         decoration: textFieldStyle,
-                        onChanged: isObj(payload.type) ? null : (value) {
+                        onChanged: (value) {
                           // TODO
                         })
                     : CopiedText(payload.type)),
-            Expanded(
-                flex: 3,
-                child: isEdit
-                    ? TextFormField(controller: TextEditingController(text: payload.description), decoration: textFieldStyle)
-                    : CopiedText(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
+          Expanded(
+              flex: 3,
+              child: isEdit
+                  ? TextFormField(controller: TextEditingController(text: payload.description), decoration: textFieldStyle)
+                  : CopiedText(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
+          if (isEdit)
+          GestureDetector(
+            onTap: () {
+              // TODO
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Icon(Icons.remove, size: size * 2),
+            ),
+          ),
         ],
       ),
     );

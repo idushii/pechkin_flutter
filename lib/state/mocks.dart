@@ -17,6 +17,7 @@ final mockProjectRequests = [
     name: "Auth",
     description: "Авторизация",
     type: RequestType.POST,
+    headers: [ProjectRequestPayload.notType('Content-Type', 'application/json')],
     payload: [
       ProjectRequestPayload.string('email', 'Email'),
       ProjectRequestPayload.string('password', 'Password'),
@@ -27,7 +28,9 @@ final mockProjectRequests = [
       ProjectRequestPayload.string('refresh_token', 'Refresh token'),
     ],
   ),
-  ProjectRequest(id: 2, projectId: 1, groupId: 1, path: '/registration', name: "Registration", description: "Регистрация", type: RequestType.POST, payload: [
+  ProjectRequest(id: 2, projectId: 1, groupId: 1, path: '/registration', name: "Registration", description: "Регистрация", type: RequestType.POST, headers: [
+    ProjectRequestPayload.notType('Content-Type', 'application/json')
+  ], payload: [
     ProjectRequestPayload.string('email', 'Email'),
     ProjectRequestPayload.string('name', 'Name'),
     ProjectRequestPayload.string('password', 'Password'),
@@ -35,43 +38,41 @@ final mockProjectRequests = [
   ], response: [
     ProjectRequestPayload.string('status', 'Status'),
   ]),
-  ProjectRequest(
-      id: 3,
-      projectId: 1,
-      groupId: 2,
-      path: '/tasks',
-      name: "Список задач",
-      description: "Список задач",
-      type: RequestType.GET,
-      payload: [
-        ProjectRequestPayload.int('page', 'Страница'),
-        ProjectRequestPayload.int('limit', 'На странице'),
-      ],
-      response: [
-        ProjectRequestPayload([], name: 'items', description: 'items', isArray: false, type: ProjectRequestPayloadType.ARRAY),
-        ProjectRequestPayload.int('id', 'Id', ['items']),
-        ProjectRequestPayload.string('name', 'Наименование', ['items']),
-        ProjectRequestPayload.string('text', 'Текст', ['items']),
-        ProjectRequestPayload.string('status', 'Статус', ['items']),
-        ProjectRequestPayload.string('executor', 'Исполнитель', ['items']),
-        ProjectRequestPayload.string('creator', 'Создатель', ['items']),
-        ProjectRequestPayload.string('date', 'Дата', ['items']),
-        ProjectRequestPayload([], name: 'meta', description: 'meta', isArray: false, type: ProjectRequestPayloadType.OBJECT),
-        ProjectRequestPayload.int('total', 'Всего', ['meta']),
-        ProjectRequestPayload.int('page', 'Страница', ['meta']),
-        ProjectRequestPayload.int('limit', 'На странице', ['meta']),
-        ProjectRequestPayload([], name: 'append', description: 'append', isArray: true, type: ProjectRequestPayloadType.OBJECT),
-        ProjectRequestPayload.int('append', 'Дополнительные данные', ['append']),
-        ProjectRequestPayload([], name: 'tags', description: 'tags', isArray: true, type: ProjectRequestPayloadType.ARRAY),
-        ProjectRequestPayload.int('id', 'id', ['tags']),
-         ProjectRequestPayload.string('name', 'Наименование', ['tags']),
-      ]),
+  ProjectRequest(id: 3, projectId: 1, groupId: 2, path: '/tasks', name: "Список задач", description: "Список задач", type: RequestType.GET, payload: [
+    ProjectRequestPayload.int('page', 'Страница'),
+    ProjectRequestPayload.int(
+      'limit',
+      'На странице',
+    ),
+  ], response: [
+    ProjectRequestPayload([], name: 'items', description: 'items', isArray: false, type: ProjectRequestPayloadType.ARRAY),
+    ProjectRequestPayload.int('id', 'Id', ['items']),
+    ProjectRequestPayload.string('name', 'Наименование', ['items']),
+    ProjectRequestPayload.string('text', 'Текст', ['items']),
+    ProjectRequestPayload.string('status', 'Статус', ['items']),
+    ProjectRequestPayload.string('executor', 'Исполнитель', ['items']),
+    ProjectRequestPayload.string('creator', 'Создатель', ['items']),
+    ProjectRequestPayload.string('date', 'Дата', ['items']),
+    ProjectRequestPayload([], name: 'meta', description: 'meta', isArray: false, type: ProjectRequestPayloadType.OBJECT),
+    ProjectRequestPayload.int('total', 'Всего', ['meta']),
+    ProjectRequestPayload.int('page', 'Страница', ['meta']),
+    ProjectRequestPayload.int('limit', 'На странице', ['meta']),
+    ProjectRequestPayload([], name: 'append', description: 'append', isArray: true, type: ProjectRequestPayloadType.OBJECT),
+    ProjectRequestPayload.int('append', 'Дополнительные данные', ['append']),
+    ProjectRequestPayload([], name: 'tags', description: 'tags', isArray: true, type: ProjectRequestPayloadType.ARRAY),
+    ProjectRequestPayload.int('id', 'id', ['tags']),
+    ProjectRequestPayload.string('name', 'Наименование', ['tags']),
+  ], headers: [
+    ProjectRequestPayload.notType('Content-Type', 'application/json')
+  ]),
   ProjectRequest(id: 4, projectId: 1, groupId: 2, path: '/task', name: "Создание задачи", description: "Создание задачи", type: RequestType.POST, payload: [
     ProjectRequestPayload.string('name', 'Наименование'),
     ProjectRequestPayload.string('text', 'Текст'),
     ProjectRequestPayload.string('executor', 'Исполнитель'),
   ], response: [
     ProjectRequestPayload.int('status', 'Статус'),
+  ], headers: [
+    ProjectRequestPayload.notType('Content-Type', 'application/json')
   ]),
   ProjectRequest(
       id: 5,
@@ -88,7 +89,9 @@ final mockProjectRequests = [
       ],
       response: [
         ProjectRequestPayload.int('status', 'Статус'),
-      ]),
+      ], headers: [
+    ProjectRequestPayload.notType('Content-Type', 'application/json')
+  ]),
   ProjectRequest(
       id: 6,
       projectId: 1,
@@ -100,7 +103,9 @@ final mockProjectRequests = [
       payload: [],
       response: [
         ProjectRequestPayload.int('status', 'Статус'),
-      ]),
+      ], headers: [
+    ProjectRequestPayload.notType('Content-Type', 'application/json')
+  ]),
   ProjectRequest(
       id: 7,
       projectId: 1,
@@ -118,7 +123,9 @@ final mockProjectRequests = [
         ProjectRequestPayload.string('text', 'Описание', ['items']),
         ProjectRequestPayload.string('type', 'Тип', ['items']),
         ProjectRequestPayload.string('isArray', 'Это массив', ['items']),
-      ]),
+      ], headers: [
+    ProjectRequestPayload.notType('Content-Type', 'application/json')
+  ]),
 ];
 
 final List<ProjectRequestGroup> mockProjectGroups = [

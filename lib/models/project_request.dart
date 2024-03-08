@@ -7,6 +7,7 @@ class RequestType {
 }
 
 class ProjectRequestPayloadType {
+  static const String NOT_TYPE = 'not_type';
   static const String STRING = 'string';
   static const String INT = 'int';
   static const String DOUBLE = 'double';
@@ -72,6 +73,16 @@ class ProjectRequestPayload {
     );
   }
 
+  static ProjectRequestPayload notType(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
+    return ProjectRequestPayload(
+      path,
+      name: name,
+      description: desc,
+      type: ProjectRequestPayloadType.NOT_TYPE,
+      isArray: isArray,
+    );
+  }
+
   static ProjectRequestPayload int(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,
@@ -111,6 +122,7 @@ class ProjectRequest {
   final String name;
   final String description;
   final String type;
+  final List<ProjectRequestPayload> headers;
   final List<ProjectRequestPayload> payload;
   final List<ProjectRequestPayload> response;
 
@@ -122,6 +134,7 @@ class ProjectRequest {
     required this.name,
     required this.description,
     required this.type,
+    required this.headers,
     required this.payload,
     required this.response,
   });
@@ -135,6 +148,7 @@ class ProjectRequest {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       type: json['type'] ?? RequestType.GET,
+      headers: (json['headers'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
       payload: (json['payload'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
       response: (json['response'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
     );
@@ -149,6 +163,7 @@ class ProjectRequest {
       'name': name,
       'description': description,
       'type': type,
+      'headers': headers.map((e) => e.toMap()).toList(),
       'payload': payload.map((e) => e.toMap()).toList(),
       'response': response.map((e) => e.toMap()).toList(),
     };
@@ -163,6 +178,7 @@ class ProjectRequest {
       name: '',
       description: '',
       type: RequestType.GET,
+      headers: [],
       payload: [],
       response: [],
     );
