@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/shared/copied_text.dart';
 
 class ProjectViewRequestPayloadItem extends StatelessWidget {
   final ProjectRequestPayload payload;
@@ -54,7 +55,7 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             flex: 2,
-            child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : Text(name),
+            child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : CopiedText(name, minWidth: 700),
           ),
           if (payload.type != ProjectRequestPayloadType.ARRAY && payload.type != ProjectRequestPayloadType.OBJECT) ...[
             Container(
@@ -67,12 +68,12 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                         onChanged: (value) {
                           // TODO
                         })
-                    : Text(payload.type)),
+                    : CopiedText(payload.type)),
             Expanded(
                 flex: 3,
                 child: isEdit
                     ? TextFormField(controller: TextEditingController(text: payload.description), decoration: textFieldStyle)
-                    : Text(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                    : CopiedText(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
           ],
         ],
       ),
