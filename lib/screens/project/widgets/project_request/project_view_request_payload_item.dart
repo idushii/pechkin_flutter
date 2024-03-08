@@ -63,8 +63,8 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
             ],
           ),
           const SizedBox(width: 10),
-          Container(
-            width: isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200,
+          SizedBox(
+            width: isEdit ? (isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200) : isObj(payload.type) ? 230 : 200,
             child: isEdit ? TextFormField(controller: TextEditingController(text: name), decoration: textFieldStyle) : CopiedText(name, minWidth: 700),
           ),
           if (payload.type != ProjectRequestPayloadType.NOT_TYPE)
