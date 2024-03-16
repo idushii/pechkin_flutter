@@ -142,9 +142,11 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
               isEdit: widget.isEdit,
               onDelete: () {
                 widget.onEdit([...widget.payload.sublist(0, i), ...widget.payload.sublist(i + 1)]);
+                updValueJson();
               },
               onEdit: (item) {
                 widget.onEdit([...widget.payload.sublist(0, i), item, ...widget.payload.sublist(i + 1)]);
+                updValueJson();
               },
             ),
             if (widget.isEdit &&
@@ -158,6 +160,7 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
                 onDelete: () {},
                 onEdit: (item) {
                   widget.onEdit([...widget.payload.sublist(0, i + 1), item, ...widget.payload.sublist(i + 1)]);
+                  updValueJson();
                 },
               )
           ],
@@ -169,6 +172,7 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
               onDelete: () {},
               onEdit: (item) {
                 widget.onEdit([...widget.payload, item]);
+                updValueJson();
               },
             )
         ]
