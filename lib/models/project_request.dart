@@ -63,6 +63,22 @@ class ProjectRequestPayload {
     );
   }
 
+  ProjectRequestPayload copyWith({
+    List<String>? path,
+    String? name,
+    String? description,
+    String? type,
+    bool? isArray,
+  }) {
+    return ProjectRequestPayload(
+      path ?? this.path,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      isArray: isArray ?? this.isArray,
+    );
+  }
+
   static ProjectRequestPayload string(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,

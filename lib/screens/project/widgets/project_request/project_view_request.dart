@@ -31,7 +31,8 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
 
   @override
   void initState() {
-    request = mockProjectRequests.firstWhere((element) => element.id == widget.id, orElse: () => ProjectRequest.empty());
+    request =
+        mockProjectRequests.firstWhere((element) => element.id == widget.id, orElse: () => ProjectRequest.empty());
 
     form.value = {
       'name': request.name,
@@ -68,11 +69,44 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
             const SizedBox(height: 10),
             ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
             const SizedBox(height: 20),
-            ProjectViewRequestPayload(payload: request.headers, title: 'Заголовки', isEdit: isEdit),
+            ProjectViewRequestPayload(
+              payload: request.headers,
+              defaultType:  ProjectRequestPayloadType.NOT_TYPE,
+              title: 'Заголовки',
+              isEdit: isEdit,
+              onEdit: (payload) {
+                setState(() {
+                  request.headers.clear();
+                  request.headers.addAll(payload);
+                });
+              },
+            ),
             const SizedBox(height: 10),
-            ProjectViewRequestPayload(payload: request.payload, title: 'Данные для отправки', isEdit: isEdit),
+            ProjectViewRequestPayload(
+              payload: request.payload,
+              defaultType:  ProjectRequestPayloadType.STRING,
+              title: 'Данные для отправки',
+              isEdit: isEdit,
+              onEdit: (payload) {
+                setState(() {
+                  request.payload.clear();
+                  request.payload.addAll(payload);
+                });
+              },
+            ),
             const SizedBox(height: 10),
-            ProjectViewRequestPayload(payload: request.response, title: 'Ответ', isEdit: isEdit),
+            ProjectViewRequestPayload(
+              payload: request.response,
+              defaultType:  ProjectRequestPayloadType.STRING,
+              title: 'Ответ',
+              isEdit: isEdit,
+              onEdit: (payload) {
+                setState(() {
+                  request.response.clear();
+                  request.response.addAll(payload);
+                });
+              },
+            ),
             const SizedBox(height: 20),
           ],
         ),

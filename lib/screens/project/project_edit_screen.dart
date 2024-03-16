@@ -60,7 +60,7 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
         ),
         body: Center(
           child: Container(
-              constraints: BoxConstraints(maxWidth: 500),
+              constraints: const BoxConstraints(maxWidth: 500),
               padding: const EdgeInsets.all(8.0),
               child: ReactiveForm(
                 formGroup: form,
@@ -68,7 +68,7 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
                   // label
                   ReactiveTextField<String>(formControlName: 'name', decoration: const InputDecoration(labelText: 'Название')),
                   ReactiveTextField<String>(formControlName: 'description', minLines: 3, maxLines: 100, decoration: const InputDecoration(labelText: 'Описание')),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
                       if (form.valid) {
