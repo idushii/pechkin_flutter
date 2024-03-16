@@ -134,7 +134,7 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
             ),
           ),
         if (!isJson) ...[
-          for (var i = 0; i < widget.payload.length; i++)
+          for (var i = 0; i < widget.payload.length; i++) ...[
             ProjectViewRequestPayloadItem(
               payload: widget.payload[i],
               isLast: false,
@@ -146,6 +146,20 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
                 widget.onEdit([...widget.payload.sublist(0, i), item, ...widget.payload.sublist(i + 1)]);
               },
             ),
+            if (widget.isEdit &&
+                i < widget.payload.length - 1 &&
+                widget.payload[i].path.isNotEmpty &&
+                (widget.payload[i].path.length != widget.payload[i + 1].path.length))
+              ProjectViewRequestPayloadItem(
+                payload: ProjectRequestPayload.empty().copyWith(type: widget.defaultType, path: widget.payload[i].path),
+                isLast: true,
+                isEdit: true,
+                onDelete: () {},
+                onEdit: (item) {
+                  widget.onEdit([...widget.payload.sublist(0, i + 1), item, ...widget.payload.sublist(i + 1)]);
+                },
+              )
+          ],
           if (widget.isEdit)
             ProjectViewRequestPayloadItem(
               payload: ProjectRequestPayload.empty().copyWith(type: widget.defaultType),
