@@ -130,6 +130,7 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
           CodeTheme(
             data: CodeThemeData(styles: solarizedLightTheme), // <= Pre-defined in flutter_highlight.
             child: CodeField(
+              readOnly: true,
               controller: controller,
             ),
           ),
