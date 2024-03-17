@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/models/project_request_payload.dart';
+import 'package:pechkin_flutter/models/project_request_payload_type.dart';
 import 'package:pechkin_flutter/shared/copied_text.dart';
 import 'package:pechkin_flutter/shared/typed/is_obj.dart';
 

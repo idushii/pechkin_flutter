@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/models/project_request_payload.dart';
+import 'package:pechkin_flutter/models/project_request_payload_type.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload_item.dart';
 import 'package:highlight/languages/json.dart';
 import 'package:highlight/languages/java.dart';
