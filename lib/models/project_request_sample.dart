@@ -1,31 +1,37 @@
+import 'package:pechkin_flutter/models/project_request.dart';
 import 'package:pechkin_flutter/shared/json_format.dart';
 
 class ProjectRequestSample {
   final int requestId;
   final String title;
   final String url;
-  final String error;
-  final int statusCode;
+  final String method; // RequestType
+  final String? error;
+  final int? statusCode;
   final Map<String, dynamic> headers;
-  final Map<String, dynamic> serverHeaders;
+  final Map<String, dynamic>? serverHeaders;
   final Map<String, dynamic> payload;
-  final Map<String, dynamic> response;
+  final Map<String, dynamic>? response;
 
-  ProjectRequestSample({required this.requestId,
+  ProjectRequestSample({
+    required this.requestId,
     required this.title,
     required this.url,
-    required this.error,
+    required this.method,
+    this.error,
     required this.statusCode,
     required this.headers,
-    required this.serverHeaders,
+    this.serverHeaders,
     required this.payload,
-    required this.response});
+    this.response,
+  });
 
   static ProjectRequestSample fromMap(Map<String, dynamic> json) {
     return ProjectRequestSample(
       requestId: json['requestId'] ?? 0,
       title: json['title'] ?? '',
       url: json['url'] ?? '',
+      method: json['method'] ?? '',
       error: json['error'] ?? '',
       statusCode: json['statusCode'] ?? 0,
       headers: json['headers'] ?? {},
@@ -40,6 +46,7 @@ class ProjectRequestSample {
       'requestId': requestId,
       'title': title,
       'url': url,
+      'method': method,
       'error': error,
       'statusCode': statusCode,
       'headers': headers,
@@ -49,10 +56,10 @@ class ProjectRequestSample {
     };
   }
 
-
   static ProjectRequestSample empty() {
     return ProjectRequestSample(
       requestId: 0,
+      method: RequestType.GET,
       title: '',
       url: '',
       error: '',
@@ -68,6 +75,7 @@ class ProjectRequestSample {
     int? requestId,
     String? title,
     String? url,
+    String? method,
     String? error,
     int? statusCode,
     Map<String, dynamic>? headers,
@@ -79,6 +87,7 @@ class ProjectRequestSample {
       requestId: requestId ?? this.requestId,
       title: title ?? this.title,
       url: url ?? this.url,
+      method: method ?? this.method,
       error: error ?? this.error,
       statusCode: statusCode ?? this.statusCode,
       headers: headers ?? this.headers,

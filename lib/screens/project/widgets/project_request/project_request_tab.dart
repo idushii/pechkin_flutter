@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/styles/styles.dart';
 
 class ProjectRequestTab extends StatelessWidget {
   final Function(int index) onSelect;
@@ -13,17 +14,18 @@ class ProjectRequestTab extends StatelessWidget {
     return Row(
       children: [
         TextButton(
-          style: ButtonStyle(
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))),
-          ),
+          style: Styles.btnTab,
           onPressed: () {},
           child: Text('Структура'),
         ),
+        for (int i = 0; i < request.samples.length; i++)
+          TextButton(
+            style: Styles.btnTab,
+            onPressed: () {},
+            child: Text(request.samples[i].title),
+          ),
         TextButton(
-          onPressed: () {},
-          child: Text('Пример 1'),
-        ),
-        TextButton(
+          style: Styles.btnTab2,
           onPressed: () {},
           child: Text('Выполнить'),
         ),

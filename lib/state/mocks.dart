@@ -4,6 +4,7 @@ import 'package:pechkin_flutter/models/project_request.dart';
 import 'package:pechkin_flutter/models/project_request_group.dart';
 import 'package:pechkin_flutter/models/project_request_payload.dart';
 import 'package:pechkin_flutter/models/project_request_payload_type.dart';
+import 'package:pechkin_flutter/models/project_request_sample.dart';
 
 final mockProjects = [
   ProjectItem(1, name: "Project 1", description: "Description 1"),
@@ -90,7 +91,45 @@ final mockProjectRequests = [
       ProjectRequestPayload.string('name', 'Наименование', ['tags']),
     ],
     headers: [ProjectRequestPayload.notType('Content-Type', 'application/json')],
-    samples: [],
+    samples: [
+      ProjectRequestSample(
+        requestId:  3,
+        serverHeaders: {},
+        statusCode: 200,
+        url: '/tasks?page=1&limit=10',
+        title: 'Пример 1',
+        method: RequestType.GET,
+        headers: {},
+        payload: {},
+        response: {
+          "items": [
+            {
+              "id": 1,
+              "name": "Task 1",
+              "text": "Text 1",
+              "status": "status 1",
+              "executor": "executor 1",
+              "creator": "creator 1",
+              "date": "date 1"
+            },
+            {
+              "id": 2,
+              "name": "Task 2",
+              "text": "Text 2",
+              "status": "status 2",
+              "executor": "executor 2",
+              "creator": "creator 2",
+              "date": "date 2"
+            },
+          ],
+          "meta": {"total": 2, "page": 1, "limit": 10},
+          "append": [],
+          "tags": [
+            {"id": 1, "name": "Tag 1"}
+          ]
+        },
+      )
+    ],
   ),
   ProjectRequest(
     id: 4,

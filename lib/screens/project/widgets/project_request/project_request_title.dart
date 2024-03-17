@@ -56,7 +56,7 @@ class ProjectRequestTitle extends StatelessWidget {
           if (isEdit)
             ReactiveTextField(
                 formControlName: 'description',
-                minLines: 3,
+                minLines: 1,
                 maxLines: 10,
                 decoration: const InputDecoration(labelText: 'Описание'),
                 onChanged: (value) {
