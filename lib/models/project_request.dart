@@ -9,6 +9,7 @@ class RequestType {
 }
 
 
+
 class ProjectRequest {
   final int id;
   final int projectId;
@@ -20,6 +21,7 @@ class ProjectRequest {
   final List<ProjectRequestPayload> headers;
   final List<ProjectRequestPayload> payload;
   final List<ProjectRequestPayload> response;
+  final List<ProjectRequestSample> samples;
 
   ProjectRequest({
     required this.id,
@@ -32,6 +34,7 @@ class ProjectRequest {
     required this.headers,
     required this.payload,
     required this.response,
+    required this.samples
   });
 
   static ProjectRequest fromMap(Map<String, dynamic> json) {
@@ -46,6 +49,7 @@ class ProjectRequest {
       headers: (json['headers'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
       payload: (json['payload'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
       response: (json['response'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
+      samples: (json['samples'] as List).map((e) => ProjectRequestSample.fromMap(e)).toList(),
     );
   }
 
@@ -61,6 +65,7 @@ class ProjectRequest {
       'headers': headers.map((e) => e.toMap()).toList(),
       'payload': payload.map((e) => e.toMap()).toList(),
       'response': response.map((e) => e.toMap()).toList(),
+      'samples': samples.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -76,6 +81,7 @@ class ProjectRequest {
       headers: [],
       payload: [],
       response: [],
+      samples: [],
     );
   }
 }

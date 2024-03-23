@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/index.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_request_desc.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_request/project_request_tab.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_request_title.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
@@ -19,6 +20,7 @@ class ProjectViewRequest extends StatefulWidget {
 class _ProjectViewRequestState extends State<ProjectViewRequest> {
   ProjectRequest request = ProjectRequest.empty();
   bool isEdit = false;
+  int indexTab = 0;
 
   FormGroup form = FormGroup({
     'name': FormControl<String>(value: ''),
@@ -66,7 +68,12 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
                 }),
             const SizedBox(height: 10),
             ProjectRequestDesc(request: request, form: form, isEdit: isEdit),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            ProjectRequestTab(
+              onSelect: (index) => setState(() => indexTab = index),
+              request: request,
+            ),
+            const SizedBox(height: 10),
             ProjectViewRequestPayload(
               payload: request.headers,
               defaultType: ProjectRequestPayloadType.NOT_TYPE,

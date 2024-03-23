@@ -113,7 +113,7 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
           Expanded(child: SelectableText(widget.title, style: Theme.of(context).textTheme.titleMedium)),
           CupertinoButton(
             padding: const EdgeInsets.all(0),
-            child: Text("JSON", style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.blue)),
+            child: Text("JSON", style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black)),
             onPressed: () {
               setState(() {
                 isJson = !isJson;
@@ -123,7 +123,7 @@ class _ProjectViewRequestPayloadState extends State<ProjectViewRequestPayload> {
         ]),
         if (isJson)
           CodeTheme(
-            data: CodeThemeData(styles: solarizedLightTheme), // <= Pre-defined in flutter_highlight.
+            data: CodeThemeData(styles: solarizedLightTheme),
             child: CodeField(
               readOnly: true,
               controller: controller,

@@ -1,3 +1,5 @@
+import 'package:pechkin_flutter/models/project_request_payload_type.dart';
+
 class ProjectRequestPayloadType {
   static const String NOT_TYPE = 'not_type';
   static const String STRING = 'string';

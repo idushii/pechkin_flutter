@@ -67,7 +67,7 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                   // label
                   ReactiveTextField<String>(formControlName: 'name', decoration: const InputDecoration(labelText: 'Название')),
-                  ReactiveTextField<String>(formControlName: 'description', minLines: 3, maxLines: 100, decoration: const InputDecoration(labelText: 'Описание')),
+                  ReactiveTextField<String>(formControlName: 'description', minLines: 1, maxLines: 100, decoration: const InputDecoration(labelText: 'Описание')),
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
