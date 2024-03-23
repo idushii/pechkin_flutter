@@ -1,15 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
-import 'package:pechkin_flutter/models/project_request.dart';
-import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload_item.dart';
-import 'package:highlight/languages/json.dart';
-import 'package:highlight/languages/java.dart';
-import 'package:highlight/languages/javascript.dart';
-import 'package:flutter_highlight/themes/monokai.dart';
 import 'package:flutter_highlight/themes/solarized-light.dart';
+import 'package:highlight/languages/java.dart';
+import 'package:pechkin_flutter/models/index.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload_item.dart';
 import 'package:pechkin_flutter/shared/json_format.dart';
 
 class ProjectViewRequestPayload extends StatefulWidget {

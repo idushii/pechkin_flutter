@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_item.dart';
 import 'package:pechkin_flutter/models/project_request.dart';
@@ -17,7 +16,8 @@ class ProjectRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final project = mockProjects.firstWhere((project) => project.id == projectId, orElse: () => ProjectItem.empty());
-    final request = mockProjectRequests.firstWhere((element) => element.id == requestId, orElse: () => ProjectRequest.empty());
+    final request =
+        mockProjectRequests.firstWhere((element) => element.id == requestId, orElse: () => ProjectRequest.empty());
     if (request.id == 0) {
       return const Center(child: Text('Запрос не найден'));
     }

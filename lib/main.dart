@@ -1,18 +1,13 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
 import 'package:pechkin_flutter/router.dart';
-import 'package:pechkin_flutter/screens/home_screen.dart';
-import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
-import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
-import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
-import 'package:pechkin_flutter/screens/projects_screen.dart';
-import 'package:pechkin_flutter/shared/menu.dart';
+import 'package:pechkin_flutter/shared/cache.dart';
+import 'package:pechkin_flutter/state/load_all.dart';
 import 'package:pechkin_flutter/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:window_manager/window_manager.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
 import 'package:system_theme/system_theme.dart';
+import 'package:window_manager/window_manager.dart';
 
 const String appTitle = 'Некая дока';
 
@@ -29,6 +24,7 @@ final _appTheme = AppTheme();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Cache.init();
 
   // if it's not on the web, windows or android, load the accent color
   if (!kIsWeb &&
@@ -56,6 +52,8 @@ void main() async {
       await windowManager.setSkipTaskbar(false);
     });
   }
+
+  loadAll();
 
   runApp(const MyApp());
 }
@@ -99,7 +97,7 @@ class MyApp extends StatelessWidget {
               child: NavigationPaneTheme(
                 data: NavigationPaneThemeData(
                   backgroundColor:
-                  appTheme.windowEffect != flutter_acrylic.WindowEffect.disabled ? Colors.transparent : null,
+                      appTheme.windowEffect != flutter_acrylic.WindowEffect.disabled ? Colors.transparent : null,
                 ),
                 child: child!,
               ),

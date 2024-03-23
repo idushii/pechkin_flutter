@@ -1,8 +1,5 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/models/index.dart';
 import 'package:pechkin_flutter/shared/copied_text.dart';
 import 'package:pechkin_flutter/shared/typed/is_obj.dart';
 
@@ -13,7 +10,13 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
   final Function(ProjectRequestPayload payload) onEdit;
   final Function() onDelete;
 
-  const ProjectViewRequestPayloadItem({super.key, required this.payload, required this.isLast, required this.isEdit, required this.onEdit, required this.onDelete});
+  const ProjectViewRequestPayloadItem(
+      {super.key,
+      required this.payload,
+      required this.isLast,
+      required this.isEdit,
+      required this.onEdit,
+      required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,9 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
     final isNoCompact = MediaQuery.of(context).size.width > 600;
 
     final textFieldStyle = InputDecoration(
-      contentPadding: isNoCompact ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5) : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      contentPadding: isNoCompact
+          ? const EdgeInsets.symmetric(horizontal: 10, vertical: 5)
+          : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       isDense: true,
       border: const OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey),
@@ -39,15 +44,15 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
     }
 
     final TextEditingController nameController = TextEditingController(text: name);
-    final TextEditingController typeController = TextEditingController( text: payload.type.toString());
-    final TextEditingController descController = TextEditingController( text: payload.description);
+    final TextEditingController typeController = TextEditingController(text: payload.type.toString());
+    final TextEditingController descController = TextEditingController(text: payload.description);
 
     return Form(
       onChanged: () {
         if (!isLast) {
           onEdit(
               payload.copyWith(name: nameController.text, type: typeController.text, description: descController.text));
-          }
+        }
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,7 +68,8 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
           Column(
             children: [
               Container(
-                decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey), left: BorderSide(color: Colors.grey))),
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.grey), left: BorderSide(color: Colors.grey))),
                 width: size,
                 height: size,
               ),
@@ -76,8 +82,14 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           SizedBox(
-            width: isEdit ? (isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200) : isObj(payload.type) ? 230 : 200,
-            child: isEdit ? TextFormField(controller: nameController, decoration: textFieldStyle) : CopiedText(name, minWidth: 700),
+            width: isEdit
+                ? (isObj(payload.type) ? (isNoCompact ? 245 : 230) : 200)
+                : isObj(payload.type)
+                    ? 230
+                    : 200,
+            child: isEdit
+                ? TextFormField(controller: nameController, decoration: textFieldStyle)
+                : CopiedText(name, minWidth: 700),
           ),
           if (payload.type != ProjectRequestPayloadType.NOT_TYPE)
             SizedBox(
@@ -85,7 +97,9 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                 child: isEdit
                     ? DropdownButtonFormField<String>(
                         value: payload.type,
-                        items: [for (var v in ProjectRequestPayloadType.values) DropdownMenuItem(value: v, child: Text(v))],
+                        items: [
+                          for (var v in ProjectRequestPayloadType.values) DropdownMenuItem(value: v, child: Text(v))
+                        ],
                         decoration: textFieldStyle,
                         onChanged: (value) {
                           if (value != null) {
@@ -99,25 +113,23 @@ class ProjectViewRequestPayloadItem extends StatelessWidget {
                   ? TextFormField(controller: descController, decoration: textFieldStyle)
                   : CopiedText(payload.description, maxLines: 1, overflow: TextOverflow.ellipsis)),
           if (isEdit)
-          GestureDetector(
-            onTap: () {
-              if  (isLast) {
-                onEdit(ProjectRequestPayload(
-                  payload.path,
-                  name: nameController.text,
-                  type: typeController.text,
-                  isArray: payload.isArray,
-                  description: descController.text
-                ));
-              } else {
-                onDelete();
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: Icon( isLast ? Icons.add : Icons.remove, size: size * 2),
+            GestureDetector(
+              onTap: () {
+                if (isLast) {
+                  onEdit(ProjectRequestPayload(payload.path,
+                      name: nameController.text,
+                      type: typeController.text,
+                      isArray: payload.isArray,
+                      description: descController.text));
+                } else {
+                  onDelete();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Icon(isLast ? Icons.add : Icons.remove, size: size * 2),
+              ),
             ),
-          ),
         ],
       ),
     );

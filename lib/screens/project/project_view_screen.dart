@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
-import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
-import 'package:pechkin_flutter/screens/project/widgets/project_info.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_groups.dart';
+import 'package:pechkin_flutter/screens/project/widgets/project_info.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request.dart';
-import 'package:pechkin_flutter/screens/project/widgets/projects_groups_list.dart';
 import 'package:pechkin_flutter/shared/splitter.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
@@ -92,26 +88,48 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
               child: Text(project.description),
             ),
             Expanded(
-              child: w > 700 ? Split(
-                key: keySplitter,
-                axis: Axis.horizontal,
-                initialFractions: (() {
-                  if (initW > 1500) {
-                    return [0.2, 0.8];
-                  }
+              child: w > 700
+                  ? Splitter(
+                      key: keySplitter,
+                      axis: Axis.horizontal,
+                      initialFractions: (() {
+                        if (initW > 1500) {
+                          return [0.2, 0.8];
+                        }
 
-                  if (initW > 1000) {
-                    return [0.3, 0.7];
-                  }
+                        if (initW > 1000) {
+                          return [0.3, 0.7];
+                        }
 
-                  if (initW > 700) {
-                    return [0.4, 0.6];
-                  }
+                        if (initW > 700) {
+                          return [0.4, 0.6];
+                        }
 
-                  return [0.5, 0.5];
-                })(),
-                children: [
-                  ProjectsGroupsList(
+                        return [0.5, 0.5];
+                      })(),
+                      children: [
+                        ProjectsGroupsList(
+                            groups: groups.toList(),
+                            id: widget.id,
+                            onTapRequest: (id) {
+                              setState(() {
+                                selectedRequest = id;
+                              });
+                            }),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Column(
+                            key: Key('project_view_request_${selectedRequest}'),
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              if (selectedRequest == 0) ProjectInfo(project: project),
+                              if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : ProjectsGroupsList(
                       groups: groups.toList(),
                       id: widget.id,
                       onTapRequest: (id) {
@@ -119,27 +137,6 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                           selectedRequest = id;
                         });
                       }),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      key: Key('project_view_request_${selectedRequest}'),
-                      crossAxisAlignment:  CrossAxisAlignment.stretch,
-                      children: [
-                        if (selectedRequest == 0) ProjectInfo(project: project),
-                        if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
-                      ],
-                    ),
-                  ),
-                ],
-              ) : ProjectsGroupsList(
-                groups: groups.toList(),
-                id: widget.id,
-                onTapRequest: (id) {
-                  setState(() {
-                    selectedRequest = id;
-                  });
-                }
-              ),
             ),
           ]),
         ));

@@ -30,9 +30,9 @@ double degToRad(double deg) => deg * (math.pi / 180.0);
 ///
 /// [initialFractions] defines how much space to give each child when building
 /// this widget.
-class Split extends StatefulWidget {
+class Splitter extends StatefulWidget {
   /// Builds a split oriented along [axis].
-  Split({
+  Splitter({
     required this.axis,
     required this.children,
     required this.initialFractions,
@@ -97,10 +97,10 @@ class Split extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _SplitState();
+  State<StatefulWidget> createState() => _SplitterState();
 }
 
-class _SplitState extends State<Split> {
+class _SplitterState extends State<Splitter> {
   List<double> fractions = [];
 
   bool get isHorizontal => widget.axis == Axis.horizontal;

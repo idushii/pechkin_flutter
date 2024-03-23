@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pechkin_flutter/models/project_request.dart';
+import 'package:pechkin_flutter/models/index.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_request_desc.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_request_title.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request_payload.dart';
@@ -71,7 +69,7 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
             const SizedBox(height: 20),
             ProjectViewRequestPayload(
               payload: request.headers,
-              defaultType:  ProjectRequestPayloadType.NOT_TYPE,
+              defaultType: ProjectRequestPayloadType.NOT_TYPE,
               title: 'Заголовки',
               isEdit: isEdit,
               onEdit: (payload) {
@@ -84,7 +82,7 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
             const SizedBox(height: 10),
             ProjectViewRequestPayload(
               payload: request.payload,
-              defaultType:  ProjectRequestPayloadType.STRING,
+              defaultType: ProjectRequestPayloadType.STRING,
               title: 'Данные для отправки',
               isEdit: isEdit,
               onEdit: (payload) {
@@ -97,7 +95,7 @@ class _ProjectViewRequestState extends State<ProjectViewRequest> {
             const SizedBox(height: 10),
             ProjectViewRequestPayload(
               payload: request.response,
-              defaultType:  ProjectRequestPayloadType.STRING,
+              defaultType: ProjectRequestPayloadType.STRING,
               title: 'Ответ',
               isEdit: isEdit,
               onEdit: (payload) {
