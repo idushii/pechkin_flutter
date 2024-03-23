@@ -1,64 +1,66 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pechkin_flutter/router.dart';
 import 'package:pechkin_flutter/screens/home_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_request_screen.dart';
 import 'package:pechkin_flutter/screens/project/project_view_screen.dart';
 import 'package:pechkin_flutter/screens/projects_screen.dart';
 import 'package:pechkin_flutter/shared/menu.dart';
+import 'package:pechkin_flutter/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
+import 'package:system_theme/system_theme.dart';
 
-void main() {
+const String appTitle = 'Некая дока';
+
+bool get isDesktop {
+  if (kIsWeb) return false;
+  return [
+    TargetPlatform.windows,
+    TargetPlatform.linux,
+    TargetPlatform.macOS,
+  ].contains(defaultTargetPlatform);
+}
+
+final _appTheme = AppTheme();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // if it's not on the web, windows or android, load the accent color
+  if (!kIsWeb &&
+      [
+        TargetPlatform.windows,
+        TargetPlatform.android,
+      ].contains(defaultTargetPlatform)) {
+    SystemTheme.accentColor.load();
+  }
+
+  if (isDesktop) {
+    await flutter_acrylic.Window.initialize();
+    if (defaultTargetPlatform == TargetPlatform.windows) {
+      await flutter_acrylic.Window.hideWindowControls();
+    }
+    await WindowManager.instance.ensureInitialized();
+    windowManager.waitUntilReadyToShow().then((_) async {
+      await windowManager.setTitleBarStyle(
+        TitleBarStyle.hidden,
+        windowButtonVisibility: false,
+      );
+      await windowManager.setMinimumSize(const Size(500, 600));
+      await windowManager.show();
+      await windowManager.setPreventClose(true);
+      await windowManager.setSkipTaskbar(false);
+    });
+  }
+
   runApp(const MyApp());
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-
-final _router = GoRouter(
-  routes: [
-    ShellRoute(
-        navigatorKey: _rootNavigatorKey,
-        builder: (context, state, child) {
-          return Scaffold(
-            body: SafeArea(
-              child: Row(
-                children: [
-                  const Menu(),
-                  Expanded(child: child),
-                ],
-              ),
-            ),
-          );
-        },
-        routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) => const ProjectsScreen(),
-          ),
-          GoRoute(path: ProjectsScreen.route, name: ProjectsScreen.route, builder: (context, state) => const ProjectsScreen(), routes: [
-            GoRoute(
-              path: ProjectViewScreen.route,
-              name: ProjectViewScreen.routeName,
-              builder: (context, state) => ProjectViewScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
-              routes: [
-                GoRoute(
-                    path: ProjectEditScreen.route,
-                    name: ProjectEditScreen.routeName,
-                    builder: (context, state) => ProjectEditScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
-                ),
-                GoRoute(
-                  path: ProjectRequestScreen.route,
-                  name: ProjectRequestScreen.routeName,
-                  builder: (context, state) => ProjectRequestScreen(
-                    projectId: int.parse(state.pathParameters['id'] ?? '0'),
-                    requestId: int.parse(state.pathParameters['requestId'] ?? '0'),
-                  ),
-                ),
-              ],
-            ),
-          ]),
-        ]),
-  ],
-);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -66,14 +68,48 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      routerConfig: _router,
+    return ChangeNotifierProvider.value(
+      value: _appTheme,
+      builder: (context, child) {
+        final appTheme = context.watch<AppTheme>();
+        return FluentApp.router(
+          title: appTitle,
+          themeMode: appTheme.mode,
+          debugShowCheckedModeBanner: false,
+          color: appTheme.color,
+          darkTheme: FluentThemeData(
+            brightness: Brightness.dark,
+            accentColor: appTheme.color,
+            visualDensity: VisualDensity.standard,
+            focusTheme: FocusThemeData(
+              glowFactor: is10footScreen(context) ? 2.0 : 0.0,
+            ),
+          ),
+          theme: FluentThemeData(
+            accentColor: appTheme.color,
+            visualDensity: VisualDensity.standard,
+            focusTheme: FocusThemeData(
+              glowFactor: is10footScreen(context) ? 2.0 : 0.0,
+            ),
+          ),
+          locale: appTheme.locale,
+          builder: (context, child) {
+            return Directionality(
+              textDirection: appTheme.textDirection,
+              child: NavigationPaneTheme(
+                data: NavigationPaneThemeData(
+                  backgroundColor:
+                  appTheme.windowEffect != flutter_acrylic.WindowEffect.disabled ? Colors.transparent : null,
+                ),
+                child: child!,
+              ),
+            );
+          },
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+          routeInformationProvider: router.routeInformationProvider,
+        );
+      },
     );
   }
 }
