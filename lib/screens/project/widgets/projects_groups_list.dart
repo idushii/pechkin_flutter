@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pechkin_flutter/models/project_request_group.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request_list.dart';

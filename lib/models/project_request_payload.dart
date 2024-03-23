@@ -1,5 +1,3 @@
-import 'package:pechkin_flutter/models/project_request_payload_type.dart';
-
 class ProjectRequestPayloadType {
   static const String NOT_TYPE = 'not_type';
   static const String STRING = 'string';
@@ -22,7 +20,8 @@ class ProjectRequestPayload {
   final String type;
   final bool isArray;
 
-  ProjectRequestPayload(this.path, {required this.name, required this.description, required this.type, required this.isArray});
+  ProjectRequestPayload(this.path,
+      {required this.name, required this.description, required this.type, required this.isArray});
 
   // from map
   static ProjectRequestPayload fromMap(Map<String, dynamic> json) {
@@ -73,7 +72,7 @@ class ProjectRequestPayload {
     );
   }
 
-  static ProjectRequestPayload string(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
+  static ProjectRequestPayload string(String name, String desc, [List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,
       name: name,
@@ -83,7 +82,7 @@ class ProjectRequestPayload {
     );
   }
 
-  static ProjectRequestPayload notType(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
+  static ProjectRequestPayload notType(String name, String desc, [List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,
       name: name,
@@ -93,7 +92,7 @@ class ProjectRequestPayload {
     );
   }
 
-  static ProjectRequestPayload int(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
+  static ProjectRequestPayload int(String name, String desc, [List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,
       name: name,
@@ -103,7 +102,7 @@ class ProjectRequestPayload {
     );
   }
 
-  static ProjectRequestPayload double(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
+  static ProjectRequestPayload double(String name, String desc, [List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,
       name: name,
@@ -113,7 +112,7 @@ class ProjectRequestPayload {
     );
   }
 
-  static ProjectRequestPayload boolean(String name, String desc, [ List<String> path = const [], bool isArray = false]) {
+  static ProjectRequestPayload boolean(String name, String desc, [List<String> path = const [], bool isArray = false]) {
     return ProjectRequestPayload(
       path,
       name: name,

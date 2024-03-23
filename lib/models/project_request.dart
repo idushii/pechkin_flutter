@@ -1,4 +1,5 @@
 import 'package:pechkin_flutter/models/index.dart';
+import 'package:pechkin_flutter/models/project_request_sample.dart';
 
 class RequestType {
   static const String GET = 'get';

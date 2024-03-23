@@ -1,5 +1,4 @@
 import 'package:pechkin_flutter/models/project_request.dart';
-import 'package:pechkin_flutter/shared/json_format.dart';
 
 class ProjectRequestSample {
   final int requestId;
