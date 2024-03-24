@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class CopiedText extends StatelessWidget {
   final String text;
@@ -22,13 +23,13 @@ class CopiedText extends StatelessWidget {
     return GestureDetector(
       onDoubleTap: () {
         Clipboard.setData(ClipboardData(text: text));
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          width: 250,
-          duration: Duration(milliseconds: 600),
-          behavior: SnackBarBehavior.floating,
-          showCloseIcon: false,
-          content: Text('Скопировано в буфер обмена'),
-        ));
+
+        showToast(
+          "Скопировано в буфер обмена",
+          context: context,
+          position: const StyledToastPosition(align: Alignment.bottomRight, offset: 20.0),
+          animDuration: const Duration(milliseconds: 100),
+        );
       },
       child: minWidth != null
           ? Container(

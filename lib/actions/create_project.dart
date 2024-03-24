@@ -42,6 +42,12 @@ class _CreateProjectModalState extends State<CreateProjectModal> {
       ),
       actions: [
         Button(
+          child: const Text('Отмена'),
+          onPressed: loading == LoadState.loading ? null : () {
+            Navigator.pop(context);
+          },
+        ),
+        FilledButton(
           child: const Text('Создать'),
           onPressed: loading == LoadState.loading ? null : () async {
             final res = await Api.createProject(name, description);
@@ -54,12 +60,6 @@ class _CreateProjectModalState extends State<CreateProjectModal> {
               error = 'Не удалось создать проект';
               setState(() => loading = LoadState.error);
             }
-          },
-        ),
-        Button(
-          child: const Text('Отмена'),
-          onPressed: loading == LoadState.loading ? null : () {
-            Navigator.pop(context);
           },
         ),
       ],
