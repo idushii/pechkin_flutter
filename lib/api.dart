@@ -56,4 +56,11 @@ class Api {
     }).catchError((e) => ApiResponse<ProjectItem>(error: e.toString()));
   }
 
+  // get single project
+  static Future<ApiResponse<ProjectItemFull>> getProject(int id) async {
+    return dio.get('/projects/$id').then((value) {
+      return ApiResponse(data: ProjectItemFull.fromMap(value.data), error: null);
+    }).catchError((e) => ApiResponse<ProjectItemFull>(error: e.toString()));
+  }
+
 }
