@@ -49,4 +49,11 @@ class Api {
     }).catchError((e) => ApiResponse<List<ProjectItem>>(error: e.toString()));
   }
 
+  // create project
+  static Future<ApiResponse<ProjectItem>> createProject(String name, String description) async {
+    return dio.post('/projects', data: {'name': name, 'description': description}).then((value) {
+      return ApiResponse(data: ProjectItem.fromMap(value.data), error: null);
+    }).catchError((e) => ApiResponse<ProjectItem>(error: e.toString()));
+  }
+
 }

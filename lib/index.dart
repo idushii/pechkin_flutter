@@ -8,6 +8,7 @@ export 'package:pechkin_flutter/screens/index.dart';
 export 'package:pechkin_flutter/shared/index.dart';
 export 'package:pechkin_flutter/state/index.dart';
 export 'package:pechkin_flutter/theme.dart';
+export 'package:pechkin_flutter/actions/index.dart';
 export 'package:provider/provider.dart';
 export 'package:system_theme/system_theme.dart';
 export 'package:window_manager/window_manager.dart';

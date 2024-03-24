@@ -5,6 +5,6 @@ loadAll() async {
 
   return await Future.wait<dynamic>([
     authCubit.load(),
-    // projectsCubit.load(),
+    projectListCubit.load(),
   ]);
 }

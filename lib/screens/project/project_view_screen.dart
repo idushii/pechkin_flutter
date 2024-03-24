@@ -13,7 +13,7 @@ class ProjectViewScreen extends StatefulWidget {
 
   final int id;
 
-  static const route = ":id";
+  static const route = "/project/:id";
   static const routeName = "project_view";
 
   @override

@@ -28,31 +28,30 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
         builder: (context, state) => const ProjectsScreen(),
       ),
       GoRoute(
+        path: ProjectViewScreen.route,
+        name: ProjectViewScreen.routeName,
+        builder: (context, state) => ProjectViewScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
+        routes: [
+          GoRoute(
+            path: ProjectEditScreen.route,
+            name: ProjectEditScreen.routeName,
+            builder: (context, state) => ProjectEditScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
+          ),
+          GoRoute(
+            path: ProjectRequestScreen.route,
+            name: ProjectRequestScreen.routeName,
+            builder: (context, state) => ProjectRequestScreen(
+              projectId: int.parse(state.pathParameters['id'] ?? '0'),
+              requestId: int.parse(state.pathParameters['requestId'] ?? '0'),
+            ),
+          ),
+        ],
+      ),
+      GoRoute(
           path: ProjectsScreen.route,
           name: ProjectsScreen.route,
           builder: (context, state) => const ProjectsScreen(),
-          routes: [
-            GoRoute(
-              path: ProjectViewScreen.route,
-              name: ProjectViewScreen.routeName,
-              builder: (context, state) => ProjectViewScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
-              routes: [
-                GoRoute(
-                  path: ProjectEditScreen.route,
-                  name: ProjectEditScreen.routeName,
-                  builder: (context, state) => ProjectEditScreen(id: int.parse(state.pathParameters['id'] ?? '0')),
-                ),
-                GoRoute(
-                  path: ProjectRequestScreen.route,
-                  name: ProjectRequestScreen.routeName,
-                  builder: (context, state) => ProjectRequestScreen(
-                    projectId: int.parse(state.pathParameters['id'] ?? '0'),
-                    requestId: int.parse(state.pathParameters['requestId'] ?? '0'),
-                  ),
-                ),
-              ],
-            ),
-          ]),
+          routes: []),
     ],
   ),
 ]);

@@ -1,6 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
-import 'package:go_router/go_router.dart';
-import 'package:pechkin_flutter/screens/profile/profile_screen.dart';
+import 'package:pechkin_flutter/index.dart';
 import 'package:url_launcher/link.dart';
 
 List<NavigationPaneItem> menuItems(BuildContext context) {
@@ -13,14 +11,26 @@ List<NavigationPaneItem> menuItems(BuildContext context) {
     ),
     PaneItemSeparator(),
     ...[
-      PaneItemHeader(header: const Text('Проекты')),
+      PaneItemHeader(
+        header: Row(
+          children: [
+            const Expanded(child: Text('Проекты')),
+            IconButton(
+                icon: const Icon(FluentIcons.add),
+                onPressed: () {
+                  createProject(context);
+                }),
+          ],
+        ),
+      ),
       PaneItemSeparator(),
-// PaneItem(
-//   key: const ValueKey('/socket/logs'),
-//   icon: const Icon(FluentIcons.button_control),
-//   title: const Text('Логи socket сервера'),
-//   body: const SizedBox.shrink(),
-// ),
+      ...projectListCubit.state.projects.map((e) => PaneItem(
+            key: ValueKey('/project/${e.id}'),
+            icon: const Icon(FluentIcons.folder),
+            title: Text(e.name),
+            body: const SizedBox.shrink(),
+            onTap: () => context.go('/project/${e.id}'),
+          ))
     ],
   ].map<NavigationPaneItem>((e) {
     PaneItem buildPaneItem(PaneItem item) {
@@ -102,14 +112,14 @@ class _LinkPaneItemAction extends PaneItem {
 
   @override
   Widget build(
-      BuildContext context,
-      bool selected,
-      VoidCallback? onPressed, {
-        PaneDisplayMode? displayMode,
-        bool showTextOnTop = true,
-        bool? autofocus,
-        int? itemIndex,
-      }) {
+    BuildContext context,
+    bool selected,
+    VoidCallback? onPressed, {
+    PaneDisplayMode? displayMode,
+    bool showTextOnTop = true,
+    bool? autofocus,
+    int? itemIndex,
+  }) {
     return Link(
       uri: Uri.parse(link),
       builder: (context, followLink) => Semantics(
