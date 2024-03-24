@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pechkin_flutter/index.dart';
 import 'package:pechkin_flutter/models/project_item.dart';
 
 class ProjectInfo extends StatelessWidget {
-  final ProjectItem project;
+  final ProjectItemFull project;
 
   const ProjectInfo({super.key, required this.project});
 

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pechkin_flutter/index.dart';
-import 'package:pechkin_flutter/screens/project/project_edit_screen.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_actions.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_groups.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_info.dart';
 import 'package:pechkin_flutter/screens/project/widgets/project_request/project_view_request.dart';
-import 'package:pechkin_flutter/shared/splitter.dart';
 import 'package:pechkin_flutter/state/mocks.dart';
 
 class ProjectViewScreen extends StatefulWidget {
@@ -50,12 +47,10 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ProjectItem project = mockProjects.firstWhere((project) => project.id == widget.id);
+    ProjectItemFull project =
+        ProjectItemFull.fromProjectItem(mockProjects.firstWhere((project) => project.id == widget.id, orElse: () => mockProjects[0]));
     List<ProjectRequestGroup> groups = mockProjectGroups.where((element) => element.projectId == widget.id).toList();
-    final w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final w = MediaQuery.of(context).size.width;
 
     if (initW == 0) {
       initW = w;
@@ -79,6 +74,11 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
 
         if (state.loadState == LoadState.error) {
           return Text(state.error);
+        }
+
+        if (widget.id > 1) {
+          project = state.project;
+          groups = state.project.groups;
         }
 
         return Scaffold(
@@ -114,25 +114,46 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                 Expanded(
                   child: w > 700
                       ? Splitter(
-                    key: keySplitter,
-                    axis: Axis.horizontal,
-                    initialFractions: (() {
-                      if (initW > 1500) {
-                        return [0.2, 0.8];
-                      }
+                          key: keySplitter,
+                          axis: Axis.horizontal,
+                          initialFractions: (() {
+                            if (initW > 1500) {
+                              return [0.2, 0.8];
+                            }
 
-                      if (initW > 1000) {
-                        return [0.3, 0.7];
-                      }
+                            if (initW > 1000) {
+                              return [0.3, 0.7];
+                            }
 
-                      if (initW > 700) {
-                        return [0.4, 0.6];
-                      }
+                            if (initW > 700) {
+                              return [0.4, 0.6];
+                            }
 
-                      return [0.5, 0.5];
-                    })(),
-                    children: [
-                      ProjectsGroupsList(
+                            return [0.5, 0.5];
+                          })(),
+                          children: [
+                            ProjectsGroupsList(
+                                groups: groups,
+                                id: widget.id,
+                                onTapRequest: (id) {
+                                  setState(() {
+                                    selectedRequest = id;
+                                  });
+                                }),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Column(
+                                key: Key('project_view_request_${selectedRequest}'),
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  if (selectedRequest == 0) ProjectInfo(project: project),
+                                  if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      : ProjectsGroupsList(
                           groups: groups.toList(),
                           id: widget.id,
                           onTapRequest: (id) {
@@ -140,27 +161,6 @@ class _ProjectViewScreenState extends State<ProjectViewScreen> {
                               selectedRequest = id;
                             });
                           }),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          key: Key('project_view_request_${selectedRequest}'),
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            if (selectedRequest == 0) ProjectInfo(project: project),
-                            if (selectedRequest > 0) Expanded(child: ProjectViewRequest(id: selectedRequest))
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                      : ProjectsGroupsList(
-                      groups: groups.toList(),
-                      id: widget.id,
-                      onTapRequest: (id) {
-                        setState(() {
-                          selectedRequest = id;
-                        });
-                      }),
                 ),
               ]),
             ));

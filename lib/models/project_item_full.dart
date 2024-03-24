@@ -43,4 +43,14 @@ class ProjectItemFull {
       groups: List<ProjectRequestGroup>.from(map['groups']?.map((x) => ProjectRequestGroup.fromMap(x))),
     );
   }
+  // from ProjectItem
+
+  factory ProjectItemFull.fromProjectItem(ProjectItem item) {
+    return ProjectItemFull(
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      groups: [],
+    );
+  }
 }
