@@ -86,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       providers: [
         BlocProvider(create: (context) => authCubit),
         BlocProvider(create: (context) => projectListCubit),
+        BlocProvider(create: (context) => projectViewCubit),
       ],
       child: BlocConsumer<ProjectListCubit, ProjectListState>(
         listener: (context, state) {

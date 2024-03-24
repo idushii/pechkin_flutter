@@ -28,7 +28,7 @@ class ProjectRequestGroup {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       requests: (json['requests'] as List).map((e) => ProjectRequest.fromMap(e)).toList(),
-      comments: (json['comments'] as List).map((e) => ProjectComment.fromMap(e)).toList(),
+      comments: json['comments'] != null ? (json['comments'] as List).map((e) => ProjectComment.fromMap(e)).toList() : [],
     );
   }
 

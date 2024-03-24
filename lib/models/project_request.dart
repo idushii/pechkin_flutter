@@ -50,7 +50,7 @@ class ProjectRequest {
       headers: (json['headers'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
       payload: (json['payload'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
       response: (json['response'] as List).map((e) => ProjectRequestPayload.fromMap(e)).toList(),
-      samples: (json['samples'] as List).map((e) => ProjectRequestSample.fromMap(e)).toList(),
+      samples: json['samples'] != null ? (json['samples'] as List).map((e) => ProjectRequestSample.fromMap(e)).toList() : [],
     );
   }
 

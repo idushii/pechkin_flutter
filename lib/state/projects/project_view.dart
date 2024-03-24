@@ -48,5 +48,6 @@ class ProjectViewCubit extends Cubit<ProjectViewState> {
       emit(ProjectViewState(project: ProjectItemFull.empty(), loadState: LoadState.error, error: res.error!));
     }
   }
-
 }
+
+final projectViewCubit = ProjectViewCubit();

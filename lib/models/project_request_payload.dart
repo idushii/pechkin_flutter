@@ -26,18 +26,18 @@ class ProjectRequestPayload {
   // from map
   static ProjectRequestPayload fromMap(Map<String, dynamic> json) {
     return ProjectRequestPayload(
-      json['path'],
-      name: json['name'],
-      description: json['description'],
-      type: json['type'],
-      isArray: json['isArray'],
+      json['path'] == null ? [] : (json['path'] is String) ? json['path'].split('.') : json['path'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      type: json['type'] ?? ProjectRequestPayloadType.STRING,
+      isArray: json['isArray'] ?? false,
     );
   }
 
   // toMap
   Map<String, dynamic> toMap() {
     return {
-      'path': path,
+      'path': path.join('.'),
       'name': name,
       'description': description,
       'type': type,
